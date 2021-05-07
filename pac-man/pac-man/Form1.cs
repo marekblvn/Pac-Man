@@ -13,6 +13,7 @@ namespace Pac_Man
     public partial class Game : Form
     {
         Board board = new Board();
+        Scoreboard scoreboard;
         Player player = new Player(0,0);
         public Game()
         {
@@ -41,6 +42,8 @@ namespace Pac_Man
                     }
                 }
             }
+
+            scoreboard = new Scoreboard(Score);
         }
         private void CheckCollision ()
         {
@@ -75,6 +78,10 @@ namespace Pac_Man
                             player.direction = 0;
                             return;
                         }
+                    }
+                    if (obj is Coin)
+                    {
+                        obj.Visible = false;
                     }
                 }
             }

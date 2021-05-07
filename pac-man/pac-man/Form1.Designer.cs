@@ -32,8 +32,9 @@ namespace Pac_Man
             this.components = new System.ComponentModel.Container();
             this.BoardPanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.ScoreSign = new System.Windows.Forms.Label();
             this.MainGameTimer = new System.Windows.Forms.Timer(this.components);
+            this.Score = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,29 +47,41 @@ namespace Pac_Man
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.Score);
+            this.panel1.Controls.Add(this.ScoreSign);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(448, 30);
             this.panel1.TabIndex = 1;
             // 
-            // label1
+            // ScoreSign
             // 
-            this.label1.Font = new System.Drawing.Font("Zig", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 30);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "score";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ScoreSign.Font = new System.Drawing.Font("Zig", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ScoreSign.ForeColor = System.Drawing.SystemColors.Control;
+            this.ScoreSign.Location = new System.Drawing.Point(0, 0);
+            this.ScoreSign.Name = "ScoreSign";
+            this.ScoreSign.Size = new System.Drawing.Size(84, 30);
+            this.ScoreSign.TabIndex = 0;
+            this.ScoreSign.Text = "score";
+            this.ScoreSign.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // MainGameTimer
             // 
             this.MainGameTimer.Enabled = true;
             this.MainGameTimer.Interval = 20;
             this.MainGameTimer.Tick += new System.EventHandler(this.MainGameTick);
+            // 
+            // Score
+            // 
+            this.Score.Font = new System.Drawing.Font("Zig", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Score.ForeColor = System.Drawing.Color.Gold;
+            this.Score.Location = new System.Drawing.Point(85, 0);
+            this.Score.Name = "Score";
+            this.Score.Size = new System.Drawing.Size(67, 30);
+            this.Score.TabIndex = 1;
+            this.Score.Text = "0";
+            this.Score.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Game
             // 
@@ -92,8 +105,9 @@ namespace Pac_Man
 
         private System.Windows.Forms.Panel BoardPanel;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label ScoreSign;
         private System.Windows.Forms.Timer MainGameTimer;
+        private System.Windows.Forms.Label Score;
     }
 }
 

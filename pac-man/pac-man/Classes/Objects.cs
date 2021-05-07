@@ -32,7 +32,7 @@ namespace Pac_Man
     {
         public Coin (int x, int y)
         {
-            this.BackColor = Color.Yellow;
+            this.BackColor = Color.FloralWhite;
             this.Visible = true;
             this.Size = new Size(4, 4);
             this.Location = new Point(16 * x + 6, 16 * y + 6);
