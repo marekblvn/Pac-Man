@@ -85,59 +85,35 @@ namespace Pac_Man
                 switch (obj)
                 {
                     case TurningPoint:
-                        if (player.Location == obj.Location)
+                        TurningPoint point = obj as TurningPoint;
+                        if (player.Location == point.Location)
                         {
-                            TurningPoint point = obj as TurningPoint;
-                            player.speed = 0;
-                            /*switch (player.nextdirection)
+                            switch (player.direction)
                             {
                                 case 1:
                                     if (point.right)
-                                    {
                                         player.direction = 1;
-                                    }
-                                    else
-                                    {
-                                        player.direction = 0;
-                                        player.speed = 0;
-                                    }
+                                    else player.direction = 0;
                                     break;
                                 case 2:
                                     if (point.up)
-                                    {
                                         player.direction = 2;
-                                    }
-                                    else
-                                    {
-                                        player.direction = 0;
-                                        player.speed = 0;
-                                    }
+                                    else player.direction = 0;
                                     break;
                                 case 3:
                                     if (point.left)
-                                    {
                                         player.direction = 3;
-                                    }
-                                    else
-                                    {
-                                        player.direction = 0;
-                                        player.speed = 0;
-                                    }
+                                    else player.direction = 0;
                                     break;
                                 case 4:
                                     if (point.down)
-                                    {
                                         player.direction = 4;
-                                    }
-                                    else
-                                    {
-                                        player.direction = 0;
-                                        player.speed = 0;
-                                    }
+                                    else player.direction = 0;
                                     break;
-                            }*/
+                            }
                         }
                         break;
+
                     case Wall:
                         if (player.Bounds.IntersectsWith(obj.Bounds))
                         {
@@ -159,20 +135,32 @@ namespace Pac_Man
                             }
                         }
                         break;
+
+                    case Coin:
+                        if (player.Bounds.IntersectsWith(obj.Bounds) && obj.Visible)
+                        {
+                            obj.Visible = false;
+                            scoreboard.IncrementScore();
+                        }
+                        break;
+
+                    case Powerup:
+                        break;
                 }
-                     
             }
-            
+
             // Out of bounds movement
             if (player.Left < -8)
+            {
                 player.Left = 440;
+            }
             else if (player.Left + 8 > 448)
+            {
                 player.Left = -8;
+            }
         }
         private void Key_Down(object sender, KeyEventArgs e)
         {
-            if (player.speed != 0)
-                player.prevdirection = player.direction;
             switch (e.KeyCode)
             {
                 case Keys.Right:
