@@ -14,7 +14,7 @@ namespace Pac_Man
     {
         Board board = new Board();
         Scoreboard scoreboard;
-        Player player = new Player(0,0);
+        Player player;
         public Game()
         {
             InitializeComponent();
@@ -27,97 +27,177 @@ namespace Pac_Man
             {
                 for (int x = 0; x < board.width; x++)
                 {
-                    if (board.layout[y, x] == 10)
-                        BoardPanel.Controls.Add(new Wall(x, y));
-                    else if (board.layout[y, x] == 11)
-                        BoardPanel.Controls.Add(new Door(x, y));
-                    else if (board.layout[y, x] == 01)
-                        BoardPanel.Controls.Add(new Coin(x, y));
-                    else if (board.layout[y, x] == 02)
-                        BoardPanel.Controls.Add(new Powerup(x, y));
-                    else if (board.layout[y, x] == 03)
+                    switch (board.layout[y, x])
                     {
-                        player.Location = new Point(16 * x, 16 * y);
-                        BoardPanel.Controls.Add(player);
+                        case 01:
+                            BoardPanel.Controls.Add(new Coin(x, y));
+                            break;
+                        case 02:
+                            BoardPanel.Controls.Add(new Powerup(x, y));
+                            break;
+                        case 03:
+                            player = new Player(x, y);
+                            BoardPanel.Controls.Add(player);
+                            break;
+                        case 10:
+                            BoardPanel.Controls.Add(new Wall(x, y));
+                            break;
+                        case 11:
+                            BoardPanel.Controls.Add(new Door(x, y));
+                            break;
+                        case 12:
+                            BoardPanel.Controls.Add(new TurningPoint(x, y, true, true, false, false));
+                            break;
+                        case 14:
+                            BoardPanel.Controls.Add(new TurningPoint(x, y, true, false, false, true));
+                            break;
+                        case 23:
+                            BoardPanel.Controls.Add(new TurningPoint(x, y, false, true, true, false));
+                            break;
+                        case 34:
+                            BoardPanel.Controls.Add(new TurningPoint(x, y, false, false, true, true));
+                            break;
+                        case 123:
+                            BoardPanel.Controls.Add(new TurningPoint(x, y, true, true, true, false));
+                            break;
+                        case 124:
+                            BoardPanel.Controls.Add(new TurningPoint(x, y, true, true, false, true));
+                            break;
+                        case 134:
+                            BoardPanel.Controls.Add(new TurningPoint(x, y, true, false, true, true));
+                            break;
+                        case 234:
+                            BoardPanel.Controls.Add(new TurningPoint(x, y, false, true, true, true));
+                            break;
+                        case 1234:
+                            BoardPanel.Controls.Add(new TurningPoint(x, y, true, true, true, true));
+                            break;
                     }
                 }
             }
 
             scoreboard = new Scoreboard(Score);
         }
-        private void CheckCollision ()
+        private void PlayerEvents ()
         {
             foreach (PictureBox obj in BoardPanel.Controls)
             {
-                if (player.Bounds.IntersectsWith(obj.Bounds))
+                switch (obj)
                 {
-                    if (obj is Wall || obj is Door)
-                    {
-                        if ((player.direction == 2) && (player.Top < obj.Top + 16)) // Collision from the top
+                    case TurningPoint:
+                        if (player.Location == obj.Location)
                         {
-                            player.Top = obj.Top + 16;
-                            return;
+                            TurningPoint point = obj as TurningPoint;
+                            player.speed = 0;
+                            /*switch (player.nextdirection)
+                            {
+                                case 1:
+                                    if (point.right)
+                                    {
+                                        player.direction = 1;
+                                    }
+                                    else
+                                    {
+                                        player.direction = 0;
+                                        player.speed = 0;
+                                    }
+                                    break;
+                                case 2:
+                                    if (point.up)
+                                    {
+                                        player.direction = 2;
+                                    }
+                                    else
+                                    {
+                                        player.direction = 0;
+                                        player.speed = 0;
+                                    }
+                                    break;
+                                case 3:
+                                    if (point.left)
+                                    {
+                                        player.direction = 3;
+                                    }
+                                    else
+                                    {
+                                        player.direction = 0;
+                                        player.speed = 0;
+                                    }
+                                    break;
+                                case 4:
+                                    if (point.down)
+                                    {
+                                        player.direction = 4;
+                                    }
+                                    else
+                                    {
+                                        player.direction = 0;
+                                        player.speed = 0;
+                                    }
+                                    break;
+                            }*/
                         }
-                        else if ((player.direction == 4) && (obj.Top < player.Top + 16)) // Collision from the bottom
+                        break;
+                    case Wall:
+                        if (player.Bounds.IntersectsWith(obj.Bounds))
                         {
-                            player.Top = obj.Top - 16;
-                            return;
-
+                            if (player.direction == 1 && obj.Left < player.Left + 16)
+                            {
+                                player.Left = obj.Left - 16;
+                            }
+                            else if (player.direction == 2 && player.Top < obj.Top + 16)
+                            {
+                                player.Top = obj.Top + 16;
+                            }
+                            else if (player.direction == 3 && obj.Left > player.Left - 16)
+                            {
+                                player.Left = obj.Left + 16;
+                            }
+                            else if (player.direction == 4 && player.Top > obj.Top - 16)
+                            {
+                                player.Top = obj.Top - 16;
+                            }
                         }
-                        else if ((player.direction == 1) && (obj.Left < player.Left + 16)) // Collision from the right
-                        {
-                            player.Left = obj.Left + 16;
-                            return;
-                        }
-                        else if ((player.direction == 3) && (player.Left < obj.Left + 16)) // Collision from the left
-                        {
-                            player.Left = obj.Left - 16;
-                            return;
-                        }
-                    }
-                    if (obj is Coin)
-                    {
-                        obj.Visible = false;
-                        BoardPanel.Controls.Remove(obj);
-                        scoreboard.IncrementScore();
-                    }
+                        break;
                 }
+                     
             }
+            
+            // Out of bounds movement
+            if (player.Left < -8)
+                player.Left = 440;
+            else if (player.Left + 8 > 448)
+                player.Left = -8;
         }
         private void Key_Down(object sender, KeyEventArgs e)
         {
+            if (player.speed != 0)
+                player.prevdirection = player.direction;
             switch (e.KeyCode)
             {
-                case Keys.Left:
+                case Keys.Right:
                     player.direction = 1;
                     break;
                 case Keys.Up:
                     player.direction = 2;
                     break;
-                case Keys.Right:
+                case Keys.Left:
                     player.direction = 3;
                     break;
                 case Keys.Down:
                     player.direction = 4;
                     break;
             }
+            player.speed = 4;
         }
         private void Key_Up(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode)
-            {
-                case Keys.Left:
-                case Keys.Up:
-                case Keys.Right:
-                case Keys.Down:
-                    player.direction = 0;
-                    break;
-            }
+
         }
         private void MainGameTick(object sender, EventArgs e)
         {
-            player.MovePlayer();
-            CheckCollision();
+            player.UpdatePlayerDisplay();
+            PlayerEvents();
         }
     }
 }
