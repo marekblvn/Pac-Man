@@ -56,32 +56,30 @@ namespace Pac_Man
                         if ((player.direction == 2) && (player.Top < obj.Top + 16)) // Collision from the top
                         {
                             player.Top = obj.Top + 16;
-                            player.direction = 0;
                             return;
                         }
                         else if ((player.direction == 4) && (obj.Top < player.Top + 16)) // Collision from the bottom
                         {
                             player.Top = obj.Top - 16;
-                            player.direction = 0;
                             return;
 
                         }
                         else if ((player.direction == 1) && (obj.Left < player.Left + 16)) // Collision from the right
                         {
                             player.Left = obj.Left + 16;
-                            player.direction = 0;
                             return;
                         }
                         else if ((player.direction == 3) && (player.Left < obj.Left + 16)) // Collision from the left
                         {
                             player.Left = obj.Left - 16;
-                            player.direction = 0;
                             return;
                         }
                     }
                     if (obj is Coin)
                     {
                         obj.Visible = false;
+                        BoardPanel.Controls.Remove(obj);
+                        scoreboard.IncrementScore();
                     }
                 }
             }

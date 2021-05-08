@@ -32,9 +32,9 @@ namespace Pac_Man
             this.components = new System.ComponentModel.Container();
             this.BoardPanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.Score = new System.Windows.Forms.Label();
             this.ScoreSign = new System.Windows.Forms.Label();
             this.MainGameTimer = new System.Windows.Forms.Timer(this.components);
-            this.Score = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,6 +55,17 @@ namespace Pac_Man
             this.panel1.Size = new System.Drawing.Size(448, 30);
             this.panel1.TabIndex = 1;
             // 
+            // Score
+            // 
+            this.Score.Font = new System.Drawing.Font("Zig", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Score.ForeColor = System.Drawing.Color.Gold;
+            this.Score.Location = new System.Drawing.Point(85, 0);
+            this.Score.Name = "Score";
+            this.Score.Size = new System.Drawing.Size(67, 30);
+            this.Score.TabIndex = 1;
+            this.Score.Text = "0";
+            this.Score.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // ScoreSign
             // 
             this.ScoreSign.Font = new System.Drawing.Font("Zig", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -71,17 +82,6 @@ namespace Pac_Man
             this.MainGameTimer.Enabled = true;
             this.MainGameTimer.Interval = 20;
             this.MainGameTimer.Tick += new System.EventHandler(this.MainGameTick);
-            // 
-            // Score
-            // 
-            this.Score.Font = new System.Drawing.Font("Zig", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Score.ForeColor = System.Drawing.Color.Gold;
-            this.Score.Location = new System.Drawing.Point(85, 0);
-            this.Score.Name = "Score";
-            this.Score.Size = new System.Drawing.Size(67, 30);
-            this.Score.TabIndex = 1;
-            this.Score.Text = "0";
-            this.Score.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Game
             // 
