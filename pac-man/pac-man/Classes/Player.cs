@@ -10,7 +10,7 @@ namespace Pac_Man
 {
     internal class Player : PictureBox
     {
-        public int direction, nextdirection, prevdirection;
+        public int direction, backupdirection;
         public int speed;
         public Player (int x, int y)
         {

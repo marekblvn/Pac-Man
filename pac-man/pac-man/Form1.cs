@@ -91,24 +91,20 @@ namespace Pac_Man
                             switch (player.direction)
                             {
                                 case 1:
-                                    if (point.right)
-                                        player.direction = 1;
-                                    else player.direction = 0;
+                                    if (!point.right)
+                                        player.direction = 0;
                                     break;
                                 case 2:
-                                    if (point.up)
-                                        player.direction = 2;
-                                    else player.direction = 0;
+                                    if (!point.up)
+                                        player.direction = 0;
                                     break;
                                 case 3:
-                                    if (point.left)
-                                        player.direction = 3;
-                                    else player.direction = 0;
+                                    if (!point.left)
+                                        player.direction = 0;
                                     break;
                                 case 4:
-                                    if (point.down)
-                                        player.direction = 4;
-                                    else player.direction = 0;
+                                    if (!point.down)
+                                        player.direction = 0;
                                     break;
                             }
                         }
@@ -120,18 +116,22 @@ namespace Pac_Man
                             if (player.direction == 1 && obj.Left < player.Left + 16)
                             {
                                 player.Left = obj.Left - 16;
+                                player.direction = player.backupdirection;
                             }
                             else if (player.direction == 2 && player.Top < obj.Top + 16)
                             {
                                 player.Top = obj.Top + 16;
+                                player.direction = player.backupdirection;
                             }
                             else if (player.direction == 3 && obj.Left > player.Left - 16)
                             {
                                 player.Left = obj.Left + 16;
+                                player.direction = player.backupdirection;
                             }
                             else if (player.direction == 4 && player.Top > obj.Top - 16)
                             {
                                 player.Top = obj.Top - 16;
+                                player.direction = player.backupdirection;
                             }
                         }
                         break;
@@ -161,6 +161,8 @@ namespace Pac_Man
         }
         private void Key_Down(object sender, KeyEventArgs e)
         {
+            player.backupdirection = player.direction;
+
             switch (e.KeyCode)
             {
                 case Keys.Right:
