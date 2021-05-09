@@ -15,12 +15,13 @@ namespace Pac_Man
         Board board = new Board();
         Scoreboard scoreboard;
         Player player;
+        Ghost red_ghost;
         public Game()
         {
             InitializeComponent();
             InitializeScoreboard();
             InitializeBoard();
-            TotalCoins.Text = scoreboard.totalcoins.ToString();
+            red_ghost.Start(5000);
         }
 
         private void InitializeBoard ()
@@ -57,6 +58,11 @@ namespace Pac_Man
                             BoardPanel.Controls.Add(new Coin(x, y));
                             scoreboard.AddCoin();
                             BoardPanel.Controls.Add(new TurningPoint(x, y, true, false, false, true));
+                            break;
+                        case 15:
+                            red_ghost = new Ghost(x, y);
+                            BoardPanel.Controls.Add(red_ghost);
+                            red_ghost.BringToFront();
                             break;
                         case 23:
                             BoardPanel.Controls.Add(new Coin(x, y));
