@@ -35,6 +35,7 @@ namespace Pac_Man
             this.Score = new System.Windows.Forms.Label();
             this.ScoreSign = new System.Windows.Forms.Label();
             this.MainGameTimer = new System.Windows.Forms.Timer(this.components);
+            this.TotalCoins = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,6 +48,7 @@ namespace Pac_Man
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.TotalCoins);
             this.panel1.Controls.Add(this.Score);
             this.panel1.Controls.Add(this.ScoreSign);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -83,6 +85,16 @@ namespace Pac_Man
             this.MainGameTimer.Interval = 20;
             this.MainGameTimer.Tick += new System.EventHandler(this.MainGameTick);
             // 
+            // TotalCoins
+            // 
+            this.TotalCoins.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.TotalCoins.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.TotalCoins.Location = new System.Drawing.Point(284, 0);
+            this.TotalCoins.Name = "TotalCoins";
+            this.TotalCoins.Size = new System.Drawing.Size(100, 31);
+            this.TotalCoins.TabIndex = 2;
+            this.TotalCoins.Text = "0";
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -95,7 +107,6 @@ namespace Pac_Man
             this.Name = "Game";
             this.Text = "Pac-Man";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Key_Down);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Key_Up);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -108,6 +119,7 @@ namespace Pac_Man
         private System.Windows.Forms.Label ScoreSign;
         private System.Windows.Forms.Timer MainGameTimer;
         private System.Windows.Forms.Label Score;
+        private System.Windows.Forms.Label TotalCoins;
     }
 }
 

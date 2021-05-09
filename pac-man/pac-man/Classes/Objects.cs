@@ -38,6 +38,11 @@ namespace Pac_Man
             this.Location = new Point(16 * x + 6, 16 * y + 6);
         }
     }
+    //TODO: Implement fruit
+    internal class Fruit : PictureBox
+    {
+
+    }
     internal class Powerup : PictureBox
     {
         public Powerup (int x, int y)

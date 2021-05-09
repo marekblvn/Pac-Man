@@ -18,7 +18,9 @@ namespace Pac_Man
         public Game()
         {
             InitializeComponent();
+            InitializeScoreboard();
             InitializeBoard();
+            TotalCoins.Text = scoreboard.totalcoins.ToString();
         }
 
         private void InitializeBoard ()
@@ -31,6 +33,7 @@ namespace Pac_Man
                     {
                         case 01:
                             BoardPanel.Controls.Add(new Coin(x, y));
+                            scoreboard.AddCoin();
                             break;
                         case 02:
                             BoardPanel.Controls.Add(new Powerup(x, y));
@@ -46,37 +49,65 @@ namespace Pac_Man
                             BoardPanel.Controls.Add(new Door(x, y));
                             break;
                         case 12:
+                            BoardPanel.Controls.Add(new Coin(x, y));
+                            scoreboard.AddCoin();
                             BoardPanel.Controls.Add(new TurningPoint(x, y, true, true, false, false));
                             break;
                         case 14:
+                            BoardPanel.Controls.Add(new Coin(x, y));
+                            scoreboard.AddCoin();
                             BoardPanel.Controls.Add(new TurningPoint(x, y, true, false, false, true));
                             break;
                         case 23:
+                            BoardPanel.Controls.Add(new Coin(x, y));
+                            scoreboard.AddCoin();
                             BoardPanel.Controls.Add(new TurningPoint(x, y, false, true, true, false));
                             break;
                         case 34:
+                            BoardPanel.Controls.Add(new Coin(x, y));
+                            scoreboard.AddCoin();
                             BoardPanel.Controls.Add(new TurningPoint(x, y, false, false, true, true));
                             break;
                         case 123:
+                            BoardPanel.Controls.Add(new Coin(x, y));
+                            scoreboard.AddCoin();
                             BoardPanel.Controls.Add(new TurningPoint(x, y, true, true, true, false));
                             break;
                         case 124:
+                            BoardPanel.Controls.Add(new Coin(x, y));
+                            scoreboard.AddCoin();
                             BoardPanel.Controls.Add(new TurningPoint(x, y, true, true, false, true));
                             break;
                         case 134:
+                            BoardPanel.Controls.Add(new Coin(x, y));
+                            scoreboard.AddCoin();
                             BoardPanel.Controls.Add(new TurningPoint(x, y, true, false, true, true));
                             break;
                         case 234:
+                            BoardPanel.Controls.Add(new Coin(x, y));
+                            scoreboard.AddCoin();
                             BoardPanel.Controls.Add(new TurningPoint(x, y, false, true, true, true));
                             break;
                         case 1234:
+                            BoardPanel.Controls.Add(new Coin(x, y));
+                            scoreboard.AddCoin();
                             BoardPanel.Controls.Add(new TurningPoint(x, y, true, true, true, true));
                             break;
                     }
                 }
             }
-
-            scoreboard = new Scoreboard(Score);
+        }
+        private void InitializeScoreboard ()
+        {
+            this.scoreboard = new Scoreboard(Score);
+        }
+        private void CheckWinCondition ()
+        {
+            if (scoreboard.AllCoinsCollected()) 
+            {
+                MessageBox.Show("Level completed!");
+                MainGameTimer.Enabled = false;
+            }
         }
         private void PlayerEvents ()
         {
@@ -170,7 +201,7 @@ namespace Pac_Man
                                 player.newdirection = player.direction;
                                 player.direction = player.backupdirection;
                             }
-                            ResetNewdirection();
+                            player.ResetNewdirection();
                         }
                         break;
 
@@ -187,7 +218,7 @@ namespace Pac_Man
                         {
                             obj.Visible = false;
                             player.BackColor = Color.Orange;
-                            RemovePowerup();
+                            player.RemovePowerup();
                         }
                         break;
                 }
@@ -224,24 +255,13 @@ namespace Pac_Man
             }
             player.speed = 4;
         }
-        private void Key_Up(object sender, KeyEventArgs e)
-        {
-
-        }
         private void MainGameTick(object sender, EventArgs e)
         {
             player.UpdatePlayerDisplay();
             PlayerEvents();
-        }
-        private async void ResetNewdirection ()
-        {
-            await Task.Delay(200);
-            player.newdirection = 0;
-        }
-        private async void RemovePowerup ()
-        {
-            await Task.Delay(3000);
-            player.BackColor = Color.Gold;
+            //CheckWinCondition();
         }
     }
+    //TODO: Implement ghost moving + search algo
+    //TODO: Implement transitions between stages (Ready - Playing - Ended)
 }

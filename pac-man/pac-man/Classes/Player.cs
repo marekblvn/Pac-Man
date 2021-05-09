@@ -40,5 +40,15 @@ namespace Pac_Man
                     break;
             }
         }
+        public async void ResetNewdirection ()
+        {
+            await Task.Delay(200);
+            this.newdirection = 0;
+        }
+        public async void RemovePowerup ()
+        {
+            await Task.Delay(3000);
+            this.BackColor = Color.Gold;
+        }
     }
 }
