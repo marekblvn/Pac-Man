@@ -88,23 +88,56 @@ namespace Pac_Man
                         TurningPoint point = obj as TurningPoint;
                         if (player.Location == point.Location)
                         {
-                            switch (player.direction)
+                            switch (player.newdirection)
                             {
+                                case 0:
+                                    switch (player.direction)
+                                    {
+                                        case 1:
+                                            if (!point.right)
+                                                player.direction = 0;
+                                            break;
+                                        case 2:
+                                            if (!point.up)
+                                                player.direction = 0;
+                                            break;
+                                        case 3:
+                                            if (!point.left)
+                                                player.direction = 0;
+                                            break;
+                                        case 4:
+                                            if (!point.down)
+                                                player.direction = 0;
+                                            break;
+                                    }
+                                    break;
                                 case 1:
-                                    if (!point.right)
-                                        player.direction = 0;
+                                    if (point.right)
+                                    {
+                                        player.direction = player.newdirection;
+                                        player.newdirection = 0;
+                                    }
                                     break;
                                 case 2:
-                                    if (!point.up)
-                                        player.direction = 0;
+                                    if (point.up)
+                                    {
+                                        player.direction = player.newdirection;
+                                        player.newdirection = 0;
+                                    }
                                     break;
                                 case 3:
-                                    if (!point.left)
-                                        player.direction = 0;
+                                    if (point.left)
+                                    {
+                                        player.direction = player.newdirection;
+                                        player.newdirection = 0;
+                                    }
                                     break;
                                 case 4:
-                                    if (!point.down)
-                                        player.direction = 0;
+                                    if (point.down)
+                                    {
+                                        player.direction = player.newdirection;
+                                        player.newdirection = 0;
+                                    }
                                     break;
                             }
                         }
@@ -116,21 +149,25 @@ namespace Pac_Man
                             if (player.direction == 1 && obj.Left < player.Left + 16)
                             {
                                 player.Left = obj.Left - 16;
+                                player.newdirection = player.direction;
                                 player.direction = player.backupdirection;
                             }
                             else if (player.direction == 2 && player.Top < obj.Top + 16)
                             {
                                 player.Top = obj.Top + 16;
+                                player.newdirection = player.direction;
                                 player.direction = player.backupdirection;
                             }
                             else if (player.direction == 3 && obj.Left > player.Left - 16)
                             {
                                 player.Left = obj.Left + 16;
+                                player.newdirection = player.direction;
                                 player.direction = player.backupdirection;
                             }
                             else if (player.direction == 4 && player.Top > obj.Top - 16)
                             {
                                 player.Top = obj.Top - 16;
+                                player.newdirection = player.direction;
                                 player.direction = player.backupdirection;
                             }
                         }
