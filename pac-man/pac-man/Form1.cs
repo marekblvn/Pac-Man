@@ -170,6 +170,7 @@ namespace Pac_Man
                                 player.newdirection = player.direction;
                                 player.direction = player.backupdirection;
                             }
+                            ResetNewdirection();
                         }
                         break;
 
@@ -182,6 +183,12 @@ namespace Pac_Man
                         break;
 
                     case Powerup:
+                        if (player.Bounds.IntersectsWith(obj.Bounds) && obj.Visible)
+                        {
+                            obj.Visible = false;
+                            player.BackColor = Color.Orange;
+                            RemovePowerup();
+                        }
                         break;
                 }
             }
@@ -225,6 +232,16 @@ namespace Pac_Man
         {
             player.UpdatePlayerDisplay();
             PlayerEvents();
+        }
+        private async void ResetNewdirection ()
+        {
+            await Task.Delay(200);
+            player.newdirection = 0;
+        }
+        private async void RemovePowerup ()
+        {
+            await Task.Delay(3000);
+            player.BackColor = Color.Gold;
         }
     }
 }
