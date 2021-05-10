@@ -52,83 +52,174 @@ namespace Pac_Man
         public void RandomMovement (TurningPoint point)
         {
             int rnum = Rand.Next(100);
-
             switch (this.direction)
             {
                 case 1:
-                    if (rnum <= 33 && point.up)
-                        this.direction = 2;
-                    else if (rnum > 33 && rnum <= 66 && point.down)
-                        this.direction = 4;
-                    else if (rnum > 66 && rnum <= 99 && point.right)
-                        this.direction = 1;
-                    else
+                    switch (point.paths)
                     {
-                        if (point.right)
-                            this.direction = 1;
-                        else if (point.up)
-                            this.direction = 2;
-                        else if (point.left)
-                            this.direction = 3;
-                        else if (point.down)
-                            this.direction = 4;
+                        case 2:
+                            if (point.up)
+                                this.direction = 2;
+                            else if (point.down)
+                                this.direction = 4;
+                            break;
+                        case 3:
+                            if (!point.right)
+                            {
+                                if (rnum <= 49)
+                                    this.direction = 2;
+                                else if (rnum > 49)
+                                    this.direction = 4;
+                            }
+                            else if (!point.up)
+                            {
+                                if (rnum <= 49)
+                                    this.direction = 4;
+                                else if (rnum > 49)
+                                    this.direction = 1;
+                            }
+                            else if (!point.down)
+                            {
+                                if (rnum <= 49)
+                                    this.direction = 2;
+                                else if (rnum > 49)
+                                    this.direction = 1;
+                            }
+                            break;
+                        case 4:
+                            if (rnum <= 33)
+                                this.direction = 1;
+                            else if (rnum > 33 && rnum <= 66)
+                                this.direction = 2;
+                            else if (rnum > 66 && rnum <= 99)
+                                this.direction = 4;
+                            break;
                     }
                     break;
                 case 2:
-                    if (rnum <= 33 && point.right)
-                        this.direction = 1;
-                    else if (rnum > 33 && rnum <= 66 && point.left)
-                        this.direction = 3;
-                    else if (rnum > 66 && rnum <= 99 && point.up)
-                        this.direction = 2;
-                    else
+                    switch (point.paths)
                     {
-                        if (point.up)
-                            this.direction = 2;
-                        else if (point.left)
-                            this.direction = 3;
-                        else if (point.down)
-                            this.direction = 4;
-                        else if (point.right)
-                            this.direction = 1;
+                        case 2:
+                            if (point.left)
+                                this.direction = 3;
+                            else if (point.right)
+                                this.direction = 1;
+                            break;
+                        case 3:
+                            if (!point.right)
+                            {
+                                if (rnum <= 49)
+                                    this.direction = 3;
+                                else if (rnum > 49)
+                                    this.direction = 2;
+                            }
+                            else if (!point.up)
+                            {
+                                if (rnum <= 49)
+                                    this.direction = 1;
+                                else if (rnum > 49)
+                                    this.direction = 3;
+                            }
+                            else if (!point.left)
+                            {
+                                if (rnum <= 49)
+                                    this.direction = 2;
+                                else if (rnum > 49)
+                                    this.direction = 1;
+                            }
+                            break;
+                        case 4:
+                            if (rnum <= 33)
+                                this.direction = 1;
+                            else if (rnum > 33 && rnum <= 66)
+                                this.direction = 2;
+                            else if (rnum > 66 && rnum <= 99)
+                                this.direction = 3;
+                            break;
                     }
                     break;
                 case 3:
-                    if (rnum <= 33 && point.down)
-                        this.direction = 4;
-                    else if (rnum > 33 && rnum <= 66 && point.up)
-                        this.direction = 2;
-                    else if (rnum > 66 && rnum <= 99 && point.left)
-                        this.direction = 3;
-                    else
+                    switch (point.paths)
                     {
-                        if (point.left)
-                            this.direction = 3;
-                        else if (point.down)
-                            this.direction = 4;
-                        else if (point.right)
-                            this.direction = 1;
-                        else if (point.up)
-                            this.direction = 2;
+                        case 2:
+                            if (point.up)
+                                this.direction = 2;
+                            else if (point.down)
+                                this.direction = 4;
+                            break;
+                        case 3:
+                            if (!point.left)
+                            {
+                                if (rnum <= 49)
+                                    this.direction = 2;
+                                else if (rnum > 49)
+                                    this.direction = 4;
+                            }
+                            else if (!point.up)
+                            {
+                                if (rnum <= 49)
+                                    this.direction = 4;
+                                else if (rnum > 49)
+                                    this.direction = 3;
+                            }
+                            else if (!point.down)
+                            {
+                                if (rnum <= 49)
+                                    this.direction = 3;
+                                else if (rnum > 49)
+                                    this.direction = 2;
+                            }
+                            break;
+                        case 4:
+                            if (rnum <= 33)
+                                this.direction = 3;
+                            else if (rnum > 33 && rnum <= 66)
+                                this.direction = 2;
+                            else if (rnum > 66 && rnum <= 99)
+                                this.direction = 4;
+                            break;
                     }
                     break;
                 case 4:
-                    if (rnum <= 33 && point.left)
-                        this.direction = 3;
-                    else if (rnum > 33 && rnum <= 66 && point.right)
-                        this.direction = 1;
-                    else if (rnum > 66 && rnum <= 99 && point.down)
-                        this.direction = 4;
-                    else
+                    switch (point.paths)
                     {
-                        if (point.down)
-                            this.direction = 4;
-                        else if (point.right)
-                            this.direction = 1;
-                        else if (point.up)
-                            this.direction = 2;
-                        else if (point.left)
-                            this.direction = 3;
+                        case 2:
+                            if (point.left)
+                                this.direction = 3;
+                            else if (point.right)
+                                this.direction = 1;
+                            break;
+                        case 3:
+                            if (!point.right)
+                            {
+                                if (rnum <= 49)
+                                    this.direction = 3;
+                                else if (rnum > 49)
+                                    this.direction = 4;
+                            }
+                            else if (!point.left)
+                            {
+                                if (rnum <= 49)
+                                    this.direction = 4;
+                                else if (rnum > 49)
+                                    this.direction = 1;
+                            }
+                            else if (!point.down)
+                            {
+                                if (rnum <= 49)
+                                    this.direction = 1;
+                                else if (rnum > 49)
+                                    this.direction = 3;
+                            }
+                            break;
+                        case 4:
+                            if (rnum <= 33)
+                                this.direction = 1;
+                            else if (rnum > 33 && rnum <= 66)
+                                this.direction = 3;
+                            else if (rnum > 66 && rnum <= 99)
+                                this.direction = 4;
+                            break;
                     }
                     break;
             }

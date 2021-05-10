@@ -56,6 +56,7 @@ namespace Pac_Man
     internal class TurningPoint : PictureBox
     {
         public bool right, up, left, down;
+        public int paths = 0;
         public TurningPoint(int x, int y, bool a, bool b, bool c, bool d)
         {
             this.right = a;
@@ -65,6 +66,14 @@ namespace Pac_Man
             this.Location = new Point(16 * x, 16 * y);
             this.Size = new Size(16, 16);
             this.Visible = false;
+            if (this.right)
+                this.paths += 1;
+            if (this.up)
+                this.paths += 1;
+            if (this.left)
+                this.paths += 1;
+            if (this.down)
+                this.paths += 1;
         }
     }
 }
