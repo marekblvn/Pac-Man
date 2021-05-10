@@ -22,7 +22,7 @@ namespace Pac_Man
             this.direction = 1;
             this.speed = 4;
         }
-        public void UpdatePlayerDisplay ()
+        public void UpdatePlayerPosition ()
         {
             switch (direction)
             {

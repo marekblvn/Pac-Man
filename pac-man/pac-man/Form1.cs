@@ -12,6 +12,7 @@ namespace Pac_Man
 {
     public partial class Game : Form
     {
+        Random rand = new Random();
         Board board = new Board();
         Scoreboard scoreboard;
         Player player;
@@ -119,114 +120,115 @@ namespace Pac_Man
         {
             foreach (PictureBox obj in BoardPanel.Controls)
             {
-                switch (obj)
+                if (player.Bounds.IntersectsWith(obj.Bounds))
                 {
-                    case TurningPoint:
-                        TurningPoint point = obj as TurningPoint;
-                        if (player.Location == point.Location)
-                        {
-                            switch (player.newdirection)
+                    switch (obj)
+                    {
+                        case TurningPoint:
+                            TurningPoint point = obj as TurningPoint;
+                            if (player.Location == point.Location)
                             {
-                                case 0:
-                                    switch (player.direction)
-                                    {
-                                        case 1:
-                                            if (!point.right)
-                                                player.direction = 0;
-                                            break;
-                                        case 2:
-                                            if (!point.up)
-                                                player.direction = 0;
-                                            break;
-                                        case 3:
-                                            if (!point.left)
-                                                player.direction = 0;
-                                            break;
-                                        case 4:
-                                            if (!point.down)
-                                                player.direction = 0;
-                                            break;
-                                    }
-                                    break;
-                                case 1:
-                                    if (point.right)
-                                    {
-                                        player.direction = player.newdirection;
-                                        player.newdirection = 0;
-                                    }
-                                    break;
-                                case 2:
-                                    if (point.up)
-                                    {
-                                        player.direction = player.newdirection;
-                                        player.newdirection = 0;
-                                    }
-                                    break;
-                                case 3:
-                                    if (point.left)
-                                    {
-                                        player.direction = player.newdirection;
-                                        player.newdirection = 0;
-                                    }
-                                    break;
-                                case 4:
-                                    if (point.down)
-                                    {
-                                        player.direction = player.newdirection;
-                                        player.newdirection = 0;
-                                    }
-                                    break;
+                                switch (player.newdirection)
+                                {
+                                    case 0:
+                                        switch (player.direction)
+                                        {
+                                            case 1:
+                                                if (!point.right)
+                                                    player.direction = 0;
+                                                break;
+                                            case 2:
+                                                if (!point.up)
+                                                    player.direction = 0;
+                                                break;
+                                            case 3:
+                                                if (!point.left)
+                                                    player.direction = 0;
+                                                break;
+                                            case 4:
+                                                if (!point.down)
+                                                    player.direction = 0;
+                                                break;
+                                        }
+                                        break;
+                                    case 1:
+                                        if (point.right)
+                                        {
+                                            player.direction = player.newdirection;
+                                            player.newdirection = 0;
+                                        }
+                                        break;
+                                    case 2:
+                                        if (point.up)
+                                        {
+                                            player.direction = player.newdirection;
+                                            player.newdirection = 0;
+                                        }
+                                        break;
+                                    case 3:
+                                        if (point.left)
+                                        {
+                                            player.direction = player.newdirection;
+                                            player.newdirection = 0;
+                                        }
+                                        break;
+                                    case 4:
+                                        if (point.down)
+                                        {
+                                            player.direction = player.newdirection;
+                                            player.newdirection = 0;
+                                        }
+                                        break;
+                                }
                             }
-                        }
-                        break;
+                            break;
 
-                    case Wall:
-                        if (player.Bounds.IntersectsWith(obj.Bounds))
-                        {
+                        case Wall:
+
                             if (player.direction == 1 && obj.Left < player.Left + 16)
                             {
-                                player.Left = obj.Left - 16;
-                                player.newdirection = player.direction;
-                                player.direction = player.backupdirection;
+                                 player.Left = obj.Left - 16;
+                                 player.newdirection = player.direction;
+                                 player.direction = player.backupdirection;
                             }
                             else if (player.direction == 2 && player.Top < obj.Top + 16)
                             {
-                                player.Top = obj.Top + 16;
-                                player.newdirection = player.direction;
-                                player.direction = player.backupdirection;
+                                 player.Top = obj.Top + 16;
+                                 player.newdirection = player.direction;
+                                 player.direction = player.backupdirection;
                             }
                             else if (player.direction == 3 && obj.Left > player.Left - 16)
                             {
-                                player.Left = obj.Left + 16;
-                                player.newdirection = player.direction;
-                                player.direction = player.backupdirection;
+                                 player.Left = obj.Left + 16;
+                                 player.newdirection = player.direction;
+                                 player.direction = player.backupdirection;
                             }
                             else if (player.direction == 4 && player.Top > obj.Top - 16)
                             {
-                                player.Top = obj.Top - 16;
-                                player.newdirection = player.direction;
-                                player.direction = player.backupdirection;
+                                 player.Top = obj.Top - 16;
+                                 player.newdirection = player.direction;
+                                 player.direction = player.backupdirection;
                             }
                             player.ResetNewdirection();
-                        }
-                        break;
+                            break;
 
-                    case Coin:
-                        if (player.Bounds.IntersectsWith(obj.Bounds) && obj.Visible)
-                        {
-                            obj.Visible = false;
-                            scoreboard.IncrementScore();
-                        }
-                        break;
+                        case Coin:
+                            if (obj.Visible)
+                            {
+                                obj.Visible = false;
+                                scoreboard.IncrementScore();
+                            }
+                            break;
 
-                    case Powerup:
-                        if (player.Bounds.IntersectsWith(obj.Bounds) && obj.Visible)
-                        {
-                            obj.Visible = false;
-                            player.BackColor = Color.Orange;
-                            player.RemovePowerup();
-                        }
-                        break;
+                        case Powerup:
+                            if (obj.Visible)
+                            {
+                                obj.Visible = false;
+                                player.BackColor = Color.Orange;
+                                player.RemovePowerup();
+                            }
+                            break;
+                    }
                 }
             }
 
@@ -240,6 +242,27 @@ namespace Pac_Man
                 player.Left = -8;
             }
         }
+
+        private void GhostEvents ()
+        {
+            foreach(PictureBox obj in BoardPanel.Controls)
+            {
+                switch (obj)
+                {
+                    case TurningPoint:
+                        TurningPoint point = obj as TurningPoint;
+                        if (red_ghost.Location == point.Location)
+                            red_ghost.RandomMovement(point);
+                        break;
+                }
+            }
+
+            if (red_ghost.Left < -8)
+                red_ghost.Left = 440;
+            else if (red_ghost.Left + 8 > 448)
+                red_ghost.Left = -8;
+        }
+
         private void Key_Down(object sender, KeyEventArgs e)
         {
             player.backupdirection = player.direction;
@@ -263,8 +286,10 @@ namespace Pac_Man
         }
         private void MainGameTick(object sender, EventArgs e)
         {
-            player.UpdatePlayerDisplay();
+            player.UpdatePlayerPosition();
+            red_ghost.UpdateGhostPosition();
             PlayerEvents();
+            GhostEvents();
             //CheckWinCondition();
         }
     }
