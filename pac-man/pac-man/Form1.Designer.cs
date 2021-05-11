@@ -31,11 +31,18 @@ namespace Pac_Man
         {
             this.components = new System.ComponentModel.Container();
             this.BoardPanel = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.TopPanel = new System.Windows.Forms.Panel();
             this.Score = new System.Windows.Forms.Label();
             this.ScoreSign = new System.Windows.Forms.Label();
             this.MainGameTimer = new System.Windows.Forms.Timer(this.components);
-            this.panel1.SuspendLayout();
+            this.Lives = new System.Windows.Forms.Label();
+            this.live1 = new System.Windows.Forms.PictureBox();
+            this.live2 = new System.Windows.Forms.PictureBox();
+            this.live3 = new System.Windows.Forms.PictureBox();
+            this.TopPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.live1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.live2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.live3)).BeginInit();
             this.SuspendLayout();
             // 
             // BoardPanel
@@ -45,15 +52,15 @@ namespace Pac_Man
             this.BoardPanel.Size = new System.Drawing.Size(448, 496);
             this.BoardPanel.TabIndex = 0;
             // 
-            // panel1
+            // TopPanel
             // 
-            this.panel1.Controls.Add(this.Score);
-            this.panel1.Controls.Add(this.ScoreSign);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(448, 30);
-            this.panel1.TabIndex = 1;
+            this.TopPanel.Controls.Add(this.Score);
+            this.TopPanel.Controls.Add(this.ScoreSign);
+            this.TopPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.TopPanel.Location = new System.Drawing.Point(0, 0);
+            this.TopPanel.Name = "TopPanel";
+            this.TopPanel.Size = new System.Drawing.Size(448, 30);
+            this.TopPanel.TabIndex = 1;
             // 
             // Score
             // 
@@ -61,7 +68,7 @@ namespace Pac_Man
             this.Score.ForeColor = System.Drawing.Color.Gold;
             this.Score.Location = new System.Drawing.Point(85, 0);
             this.Score.Name = "Score";
-            this.Score.Size = new System.Drawing.Size(67, 30);
+            this.Score.Size = new System.Drawing.Size(82, 30);
             this.Score.TabIndex = 1;
             this.Score.Text = "0";
             this.Score.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -83,19 +90,67 @@ namespace Pac_Man
             this.MainGameTimer.Interval = 20;
             this.MainGameTimer.Tick += new System.EventHandler(this.MainGameTick);
             // 
+            // Lives
+            // 
+            this.Lives.Font = new System.Drawing.Font("Zig", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Lives.ForeColor = System.Drawing.SystemColors.Control;
+            this.Lives.Location = new System.Drawing.Point(294, 528);
+            this.Lives.Name = "Lives";
+            this.Lives.Size = new System.Drawing.Size(82, 23);
+            this.Lives.TabIndex = 2;
+            this.Lives.Text = "lives";
+            this.Lives.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // live1
+            // 
+            this.live1.BackgroundImage = global::Pac_Man.Properties.Resources.live;
+            this.live1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.live1.Location = new System.Drawing.Point(382, 531);
+            this.live1.Name = "live1";
+            this.live1.Size = new System.Drawing.Size(16, 16);
+            this.live1.TabIndex = 3;
+            this.live1.TabStop = false;
+            // 
+            // live2
+            // 
+            this.live2.BackgroundImage = global::Pac_Man.Properties.Resources.live;
+            this.live2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.live2.Location = new System.Drawing.Point(404, 531);
+            this.live2.Name = "live2";
+            this.live2.Size = new System.Drawing.Size(16, 16);
+            this.live2.TabIndex = 4;
+            this.live2.TabStop = false;
+            // 
+            // live3
+            // 
+            this.live3.BackgroundImage = global::Pac_Man.Properties.Resources.live;
+            this.live3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.live3.Location = new System.Drawing.Point(426, 531);
+            this.live3.Name = "live3";
+            this.live3.Size = new System.Drawing.Size(16, 16);
+            this.live3.TabIndex = 5;
+            this.live3.TabStop = false;
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Desktop;
             this.ClientSize = new System.Drawing.Size(448, 553);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.live3);
+            this.Controls.Add(this.live2);
+            this.Controls.Add(this.live1);
+            this.Controls.Add(this.Lives);
+            this.Controls.Add(this.TopPanel);
             this.Controls.Add(this.BoardPanel);
             this.MaximizeBox = false;
             this.Name = "Game";
             this.Text = "Pac-Man";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Key_Down);
-            this.panel1.ResumeLayout(false);
+            this.TopPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.live1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.live2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.live3)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -103,10 +158,14 @@ namespace Pac_Man
         #endregion
 
         private System.Windows.Forms.Panel BoardPanel;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel TopPanel;
         private System.Windows.Forms.Label ScoreSign;
         private System.Windows.Forms.Timer MainGameTimer;
         private System.Windows.Forms.Label Score;
+        private System.Windows.Forms.Label Lives;
+        private System.Windows.Forms.PictureBox live1;
+        private System.Windows.Forms.PictureBox live2;
+        private System.Windows.Forms.PictureBox live3;
     }
 }
 

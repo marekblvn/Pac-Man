@@ -262,7 +262,7 @@ namespace Pac_Man
                             if (obj.Visible)
                             {
                                 obj.Visible = false;
-                                player.BackColor = Color.Orange;
+                                player.Tag = 2;
                                 player.RemovePowerup();
                             }
                             break;
@@ -270,7 +270,7 @@ namespace Pac_Man
                         case Ghost:
                             if (obj.Visible)
                             {
-                                player.BackColor = Color.Orange;
+                                PlayerGhostCollision();
                             }
                             break;
                     }
@@ -364,6 +364,34 @@ namespace Pac_Man
             }
             player.speed = 4;
         }
+        private void CheckPlayerLives ()
+        {
+            if (player.lives == 2)
+                live1.Visible = false;
+            else if (player.lives == 1)
+                live2.Visible = false;
+            else if (player.lives == 0)
+                live3.Visible = false;
+            else if (player.lives == -1)
+            {
+                live1.Visible = true;
+                live2.Visible = true;
+                live3.Visible = true;
+            }
+
+        }
+        private async void PlayerGhostCollision ()
+        {
+            //if (player.powerup)
+            //do smthing
+            if ((int)player.Tag == 0)
+            {
+                player.Tag = 1;
+                player.lives -= 1;
+                await Task.Delay(2000);
+                player.Tag = 0;
+            }    
+        }
         private void MainGameTick(object sender, EventArgs e)
         {
             player.UpdatePlayerPosition();
@@ -371,6 +399,7 @@ namespace Pac_Man
             green_ghost.UpdateGhostPosition();
             PlayerEvents();
             GhostEvents();
+            CheckPlayerLives();
             //CheckWinCondition();
         }
     }

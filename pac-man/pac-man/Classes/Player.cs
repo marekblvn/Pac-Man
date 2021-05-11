@@ -13,14 +13,17 @@ namespace Pac_Man
         public int direction, backupdirection;
         public int newdirection = 0;
         public int speed;
+        public int lives;
         public Player (int x, int y)
         {
-            this.BackColor = Color.Gold;
             this.Visible = true;
+            this.Tag = 0; // 0 -- normal; 1 -- hit by ghost and recovering; 2 -- powered up
+            this.Image = Properties.Resources.pacman;
             this.Size = new Size(16, 16);
             this.Location = new Point(16 * x, 16 * y);
             this.direction = 1;
             this.speed = 4;
+            this.lives = 3;
         }
         public void UpdatePlayerPosition ()
         {
@@ -48,7 +51,7 @@ namespace Pac_Man
         public async void RemovePowerup ()
         {
             await Task.Delay(3000);
-            this.BackColor = Color.Gold;
+            this.Tag = 0;
         }
     }
 }
