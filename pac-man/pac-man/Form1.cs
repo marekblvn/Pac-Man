@@ -16,7 +16,7 @@ namespace Pac_Man
         Board board = new Board();
         Scoreboard scoreboard;
         Player player;
-        Ghost red_ghost;
+        Ghost red_ghost, green_ghost;
         public Game()
         {
             InitializeComponent();
@@ -61,9 +61,14 @@ namespace Pac_Man
                             BoardPanel.Controls.Add(new TurningPoint(x, y, true, false, false, true));
                             break;
                         case 15:
-                            red_ghost = new Ghost(x, y);
+                            red_ghost = new Ghost(x, y, 'r');
                             BoardPanel.Controls.Add(red_ghost);
                             red_ghost.BringToFront();
+                            break;
+                        case 16:
+                            green_ghost = new Ghost(x, y, 'g');
+                            BoardPanel.Controls.Add(green_ghost);
+                            green_ghost.BringToFront();
                             break;
                         case 23:
                             BoardPanel.Controls.Add(new Coin(x, y));
@@ -228,6 +233,13 @@ namespace Pac_Man
                                 player.RemovePowerup();
                             }
                             break;
+
+                        case Ghost:
+                            if (obj.Visible)
+                            {
+                                player.BackColor = Color.Orange;
+                            }
+                            break;
                     }
                 }
             }
@@ -250,9 +262,14 @@ namespace Pac_Man
                 switch (obj)
                 {
                     case TurningPoint:
+
                         TurningPoint point = obj as TurningPoint;
+
                         if (red_ghost.Location == point.Location)
                             red_ghost.RandomMovement(point);
+
+                        if (green_ghost.Location == point.Location)
+                            green_ghost.RightLeftMovement(point);
                         break;
                 }
             }
@@ -261,6 +278,11 @@ namespace Pac_Man
                 red_ghost.Left = 440;
             else if (red_ghost.Left + 8 > 448)
                 red_ghost.Left = -8;
+
+            if (green_ghost.Left < -8)
+                green_ghost.Left = 440;
+            else if (green_ghost.Left + 8 > 448)
+                green_ghost.Left = -8;
         }
 
         private void Key_Down(object sender, KeyEventArgs e)
@@ -288,6 +310,7 @@ namespace Pac_Man
         {
             player.UpdatePlayerPosition();
             red_ghost.UpdateGhostPosition();
+            green_ghost.UpdateGhostPosition();
             PlayerEvents();
             GhostEvents();
             //CheckWinCondition();
