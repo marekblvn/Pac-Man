@@ -25,7 +25,7 @@ namespace Pac_Man
             this.BackColor = Color.LightBlue;
             this.Visible = true;
             this.Size = new Size(16, 6);
-            this.Location = new Point(16 * x, (16 * y) + 3);
+            this.Location = new Point(16 * x, 16 * y);
         }
     }
     internal class Coin : PictureBox

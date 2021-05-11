@@ -12,15 +12,16 @@ namespace Pac_Man
     {
         public int direction;
         int speed;
-        public bool started;
+        public bool initialmove;
         bool movedright = false;
         Random Rand = new Random();
         public Ghost(int x, int y, char colour)
         {
             this.Size = new Size(16, 16);
             this.Location = new Point(16 * x, 16 * y);
-            this.direction = 1;
+            this.direction = 0;
             this.speed = 4;
+            this.initialmove = false;
 
             if (colour == 'r')
                 this.BackColor = Color.Red;
@@ -33,6 +34,8 @@ namespace Pac_Man
         public async void Start (int timetowait)
         {
             await Task.Delay(timetowait);
+            this.direction = 2;
+            this.initialmove = true;
         }
         public void UpdateGhostPosition ()
         {
@@ -347,6 +350,11 @@ namespace Pac_Man
                     }
                     break;
             }
+        }
+
+        public void PlayerPositionBasedMovement(Player player, TurningPoint point)
+        {
+            //TODO: Implement a moving function based on players position
         }
     }
 }

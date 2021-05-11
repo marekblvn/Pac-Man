@@ -17,12 +17,14 @@ namespace Pac_Man
         Scoreboard scoreboard;
         Player player;
         Ghost red_ghost, green_ghost;
+        List<Door> doors = new List<Door>();
         public Game()
         {
             InitializeComponent();
             InitializeScoreboard();
             InitializeBoard();
             red_ghost.Start(5000);
+            green_ghost.Start(5000);
         }
 
         private void InitializeBoard ()
@@ -48,7 +50,9 @@ namespace Pac_Man
                             BoardPanel.Controls.Add(new Wall(x, y));
                             break;
                         case 11:
-                            BoardPanel.Controls.Add(new Door(x, y));
+                            Door d = new Door(x, y);
+                            doors.Add(d);
+                            BoardPanel.Controls.Add(d);
                             break;
                         case 12:
                             BoardPanel.Controls.Add(new Coin(x, y));
@@ -217,6 +221,35 @@ namespace Pac_Man
                             player.ResetNewdirection();
                             break;
 
+                        case Door:
+                            if (player.direction == 1 && obj.Left < player.Left + 16)
+                            {
+                                player.Left = obj.Left - 16;
+                                player.newdirection = player.direction;
+                                player.direction = player.backupdirection;
+                            }
+                            else if (player.direction == 2 && player.Top < obj.Top + 16)
+                            {
+                                player.Top = obj.Top + 16;
+                                player.newdirection = player.direction;
+                                player.direction = player.backupdirection;
+                            }
+                            else if (player.direction == 3 && obj.Left > player.Left - 16)
+                            {
+                                player.Left = obj.Left + 16;
+                                player.newdirection = player.direction;
+                                player.direction = player.backupdirection;
+                            }
+                            else if (player.direction == 4 && player.Top > obj.Top - 16)
+                            {
+                                player.Top = obj.Top - 16;
+                                player.newdirection = player.direction;
+                                player.direction = player.backupdirection;
+                            }
+                            player.ResetNewdirection();
+                            break;
+
+
                         case Coin:
                             if (obj.Visible)
                             {
@@ -270,6 +303,31 @@ namespace Pac_Man
 
                         if (green_ghost.Location == point.Location)
                             green_ghost.RightLeftMovement(point);
+                        break;
+
+                    case Wall:
+
+                        if (red_ghost.Bounds.IntersectsWith(obj.Bounds) && red_ghost.initialmove)
+                        {
+                            int rnum = rand.Next(10);
+                            if (rnum <= 4)
+                                red_ghost.direction = 3;
+                            else if (rnum > 4)
+                                red_ghost.direction = 1;
+                            red_ghost.Top = obj.Top + 16;
+                            red_ghost.initialmove = false;
+
+                        }
+                        if (green_ghost.Bounds.IntersectsWith(obj.Bounds) && green_ghost.initialmove)
+                        {
+                            int rnum = rand.Next(10);
+                            if (rnum <= 4)
+                                green_ghost.direction = 3;
+                            else if (rnum > 4)
+                                green_ghost.direction = 1;
+                            green_ghost.Top = obj.Top + 16;
+                            green_ghost.initialmove = false;
+                        }
                         break;
                 }
             }
