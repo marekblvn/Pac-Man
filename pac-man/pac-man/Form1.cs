@@ -16,7 +16,7 @@ namespace Pac_Man
         Board board = new Board();
         Scoreboard scoreboard;
         Player player;
-        Ghost red_ghost, green_ghost;
+        Ghost red_ghost, blue_ghost;
         List<Door> doors = new List<Door>();
         public Game()
         {
@@ -24,7 +24,7 @@ namespace Pac_Man
             InitializeScoreboard();
             InitializeBoard();
             red_ghost.Start(5000);
-            green_ghost.Start(5000);
+            blue_ghost.Start(5000);
         }
 
         private void InitializeBoard ()
@@ -46,8 +46,77 @@ namespace Pac_Man
                             player = new Player(x, y);
                             BoardPanel.Controls.Add(player);
                             break;
-                        case 10:
-                            BoardPanel.Controls.Add(new Wall(x, y));
+                        case 40:
+                            BoardPanel.Controls.Add(new Wall(x, y, 40));
+                            break;
+                        case 41:
+                            BoardPanel.Controls.Add(new Wall(x, y, 41));
+                            break;
+                        case 42:
+                            BoardPanel.Controls.Add(new Wall(x, y, 42));
+                            break;
+                        case 43:
+                            BoardPanel.Controls.Add(new Wall(x, y, 43));
+                            break;
+                        case 44:
+                            BoardPanel.Controls.Add(new Wall(x, y, 44));
+                            break;
+                        case 45:
+                            BoardPanel.Controls.Add(new Wall(x, y, 45));
+                            break;
+                        case 50:
+                            BoardPanel.Controls.Add(new Wall(x, y, 50));
+                            break;
+                        case 51:
+                            BoardPanel.Controls.Add(new Wall(x, y, 51));
+                            break;
+                        case 52:
+                            BoardPanel.Controls.Add(new Wall(x, y, 52));
+                            break;
+                        case 53:
+                            BoardPanel.Controls.Add(new Wall(x, y, 53));
+                            break;
+                        case 60:
+                            BoardPanel.Controls.Add(new Wall(x, y, 60));
+                            break;
+                        case 61:
+                            BoardPanel.Controls.Add(new Wall(x, y, 61));
+                            break;
+                        case 62:
+                            BoardPanel.Controls.Add(new Wall(x, y, 62));
+                            break;
+                        case 63:
+                            BoardPanel.Controls.Add(new Wall(x, y, 63));
+                            break;
+                        case 70:
+                            BoardPanel.Controls.Add(new Wall(x, y, 70));
+                            break;
+                        case 71:
+                            BoardPanel.Controls.Add(new Wall(x, y, 71));
+                            break;
+                        case 72:
+                            BoardPanel.Controls.Add(new Wall(x, y, 72));
+                            break;
+                        case 73:
+                            BoardPanel.Controls.Add(new Wall(x, y, 73));
+                            break;
+                        case 80:
+                            BoardPanel.Controls.Add(new Wall(x, y, 80));
+                            break;
+                        case 81:
+                            BoardPanel.Controls.Add(new Wall(x, y, 81));
+                            break;
+                        case 90:
+                            BoardPanel.Controls.Add(new Wall(x, y, 90));
+                            break;
+                        case 91:
+                            BoardPanel.Controls.Add(new Wall(x, y, 91));
+                            break;
+                        case 92:
+                            BoardPanel.Controls.Add(new Wall(x, y, 92));
+                            break;
+                        case 93:
+                            BoardPanel.Controls.Add(new Wall(x, y, 93));
                             break;
                         case 11:
                             Door d = new Door(x, y);
@@ -70,9 +139,9 @@ namespace Pac_Man
                             red_ghost.BringToFront();
                             break;
                         case 16:
-                            green_ghost = new Ghost(x, y, 'g');
-                            BoardPanel.Controls.Add(green_ghost);
-                            green_ghost.BringToFront();
+                            blue_ghost = new Ghost(x, y, 'b');
+                            BoardPanel.Controls.Add(blue_ghost);
+                            blue_ghost.BringToFront();
                             break;
                         case 23:
                             BoardPanel.Controls.Add(new Coin(x, y));
@@ -301,8 +370,8 @@ namespace Pac_Man
                         if (red_ghost.Location == point.Location)
                             red_ghost.RandomMovement(point);
 
-                        if (green_ghost.Location == point.Location)
-                            green_ghost.RightLeftMovement(point);
+                        if (blue_ghost.Location == point.Location)
+                            blue_ghost.RightLeftMovement(point);
                         break;
 
                     case Wall:
@@ -318,15 +387,15 @@ namespace Pac_Man
                             red_ghost.initialmove = false;
 
                         }
-                        if (green_ghost.Bounds.IntersectsWith(obj.Bounds) && green_ghost.initialmove)
+                        if (blue_ghost.Bounds.IntersectsWith(obj.Bounds) && blue_ghost.initialmove)
                         {
                             int rnum = rand.Next(10);
                             if (rnum <= 4)
-                                green_ghost.direction = 3;
+                                blue_ghost.direction = 3;
                             else if (rnum > 4)
-                                green_ghost.direction = 1;
-                            green_ghost.Top = obj.Top + 16;
-                            green_ghost.initialmove = false;
+                                blue_ghost.direction = 1;
+                            blue_ghost.Top = obj.Top + 16;
+                            blue_ghost.initialmove = false;
                         }
                         break;
                 }
@@ -337,10 +406,10 @@ namespace Pac_Man
             else if (red_ghost.Left + 8 > 448)
                 red_ghost.Left = -8;
 
-            if (green_ghost.Left < -8)
-                green_ghost.Left = 440;
-            else if (green_ghost.Left + 8 > 448)
-                green_ghost.Left = -8;
+            if (blue_ghost.Left < -8)
+                blue_ghost.Left = 440;
+            else if (blue_ghost.Left + 8 > 448)
+                blue_ghost.Left = -8;
         }
 
         private void Key_Down(object sender, KeyEventArgs e)
@@ -392,13 +461,47 @@ namespace Pac_Man
                 player.Tag = 0;
             }    
         }
+        private void UpdateSprites ()
+        {
+            switch (red_ghost.direction)
+            {
+                case 1:
+                    red_ghost.Image = Properties.Resources.r_ghost1;
+                    break;
+                case 2:
+                    red_ghost.Image = Properties.Resources.r_ghost2;
+                    break;
+                case 3:
+                    red_ghost.Image = Properties.Resources.r_ghost3;
+                    break;
+                case 4:
+                    red_ghost.Image = Properties.Resources.r_ghost4;
+                    break;
+            }
+            switch (blue_ghost.direction)
+            {
+                case 1:
+                    blue_ghost.Image = Properties.Resources.b_ghost1;
+                    break;
+                case 2:
+                    blue_ghost.Image = Properties.Resources.b_ghost2;
+                    break;
+                case 3:
+                    blue_ghost.Image = Properties.Resources.b_ghost3;
+                    break;
+                case 4:
+                    blue_ghost.Image = Properties.Resources.b_ghost4;
+                    break;
+            }
+        }
         private void MainGameTick(object sender, EventArgs e)
         {
             player.UpdatePlayerPosition();
             red_ghost.UpdateGhostPosition();
-            green_ghost.UpdateGhostPosition();
+            blue_ghost.UpdateGhostPosition();
             PlayerEvents();
             GhostEvents();
+            UpdateSprites();
             CheckPlayerLives();
             //CheckWinCondition();
         }

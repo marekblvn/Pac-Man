@@ -24,11 +24,11 @@ namespace Pac_Man
             this.initialmove = false;
 
             if (colour == 'r')
-                this.BackColor = Color.Red;
+                this.Image = Properties.Resources.r_ghost2;
             else if (colour == 'g')
                 this.BackColor = Color.Green;
             else if (colour == 'b')
-                this.BackColor = Color.Blue;
+                this.Image = Properties.Resources.b_ghost2;
         }
 
         public async void Start (int timetowait)

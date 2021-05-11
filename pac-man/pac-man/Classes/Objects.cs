@@ -10,12 +10,88 @@ namespace Pac_Man
 {
     internal class Wall : PictureBox
     {
-        public Wall (int x, int y)
+        public Wall (int x, int y, int tag)
         {
-            this.BackColor = Color.Blue;
+            this.Tag = tag;
             this.Visible = true;
             this.Size = new Size(16, 16);
             this.Location = new Point(16 * x, 16 * y);
+
+            switch (tag)
+            {
+                case 40:
+                    this.Image = Properties.Resources.wall_40;
+                    break;
+                case 41:
+                    this.Image = Properties.Resources.wall_41;
+                    break;
+                case 42:
+                    this.Image = Properties.Resources.wall_42;
+                    break;
+                case 43:
+                    this.Image = Properties.Resources.wall_43;
+                    break;
+                case 44:
+                    this.Image = Properties.Resources.wall_44;
+                    break;
+                case 45:
+                    this.Image = Properties.Resources.wall_45;
+                    break;
+                case 50:
+                    this.Image = Properties.Resources.wall_50;
+                    break;
+                case 51:
+                    this.Image = Properties.Resources.wall_51;
+                    break;
+                case 52:
+                    this.Image = Properties.Resources.wall_52;
+                    break;
+                case 53:
+                    this.Image = Properties.Resources.wall_53;
+                    break;
+                case 60:
+                    this.Image = Properties.Resources.wall_60;
+                    break;
+                case 61:
+                    this.Image = Properties.Resources.wall_61;
+                    break;
+                case 62:
+                    this.Image = Properties.Resources.wall_62;
+                    break;
+                case 63:
+                    this.Image = Properties.Resources.wall_63;
+                    break;
+                case 70:
+                    this.Image = Properties.Resources.wall_70;
+                    break;
+                case 71:
+                    this.Image = Properties.Resources.wall_71;
+                    break;
+                case 72:
+                    this.Image = Properties.Resources.wall_72;
+                    break;
+                case 73:
+                    this.Image = Properties.Resources.wall_73;
+                    break;
+                case 80:
+                    this.Image = Properties.Resources.wall_80;
+                    break;
+                case 81:
+                    this.Image = Properties.Resources.wall_81;
+                    break;
+                case 90:
+                    this.Image = Properties.Resources.wall_90;
+                    break;
+                case 91:
+                    this.Image = Properties.Resources.wall_91;
+                    break;
+                case 92:
+                    this.Image = Properties.Resources.wall_92;
+                    break;
+                case 93:
+                    this.Image = Properties.Resources.wall_93;
+                    break;
+            }
         }
     }
     internal class Door : PictureBox
@@ -32,7 +108,7 @@ namespace Pac_Man
     {
         public Coin (int x, int y)
         {
-            this.BackColor = Color.FloralWhite;
+            this.Image = Properties.Resources.coin;
             this.Visible = true;
             this.Size = new Size(4, 4);
             this.Location = new Point(16 * x + 6, 16 * y + 6);
