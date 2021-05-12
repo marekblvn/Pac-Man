@@ -33,6 +33,8 @@ namespace Pac_Man
             this.BoardPanel = new System.Windows.Forms.Panel();
             this.StartPanel = new System.Windows.Forms.Panel();
             this.TopPanel = new System.Windows.Forms.Panel();
+            this.Level = new System.Windows.Forms.Label();
+            this.LevelSign = new System.Windows.Forms.Label();
             this.Score = new System.Windows.Forms.Label();
             this.ScoreSign = new System.Windows.Forms.Label();
             this.MainGameTimer = new System.Windows.Forms.Timer(this.components);
@@ -41,8 +43,6 @@ namespace Pac_Man
             this.live2 = new System.Windows.Forms.PictureBox();
             this.live3 = new System.Windows.Forms.PictureBox();
             this.BottomPanel = new System.Windows.Forms.Panel();
-            this.LevelSign = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.BoardPanel.SuspendLayout();
             this.TopPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.live1)).BeginInit();
@@ -69,7 +69,7 @@ namespace Pac_Man
             // 
             // TopPanel
             // 
-            this.TopPanel.Controls.Add(this.label1);
+            this.TopPanel.Controls.Add(this.Level);
             this.TopPanel.Controls.Add(this.LevelSign);
             this.TopPanel.Controls.Add(this.Score);
             this.TopPanel.Controls.Add(this.ScoreSign);
@@ -78,6 +78,28 @@ namespace Pac_Man
             this.TopPanel.Name = "TopPanel";
             this.TopPanel.Size = new System.Drawing.Size(448, 30);
             this.TopPanel.TabIndex = 1;
+            // 
+            // Level
+            // 
+            this.Level.Font = new System.Drawing.Font("Zig", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Level.ForeColor = System.Drawing.Color.Green;
+            this.Level.Location = new System.Drawing.Point(402, 3);
+            this.Level.Name = "Level";
+            this.Level.Size = new System.Drawing.Size(38, 23);
+            this.Level.TabIndex = 3;
+            this.Level.Text = "1";
+            this.Level.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // LevelSign
+            // 
+            this.LevelSign.Font = new System.Drawing.Font("Zig", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LevelSign.ForeColor = System.Drawing.SystemColors.Control;
+            this.LevelSign.Location = new System.Drawing.Point(314, 3);
+            this.LevelSign.Name = "LevelSign";
+            this.LevelSign.Size = new System.Drawing.Size(82, 23);
+            this.LevelSign.TabIndex = 2;
+            this.LevelSign.Text = "level";
+            this.LevelSign.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Score
             // 
@@ -158,28 +180,6 @@ namespace Pac_Man
             this.BottomPanel.Size = new System.Drawing.Size(448, 27);
             this.BottomPanel.TabIndex = 2;
             // 
-            // LevelSign
-            // 
-            this.LevelSign.Font = new System.Drawing.Font("Zig", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LevelSign.ForeColor = System.Drawing.SystemColors.Control;
-            this.LevelSign.Location = new System.Drawing.Point(314, 3);
-            this.LevelSign.Name = "LevelSign";
-            this.LevelSign.Size = new System.Drawing.Size(82, 23);
-            this.LevelSign.TabIndex = 2;
-            this.LevelSign.Text = "level";
-            this.LevelSign.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Zig", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.ForeColor = System.Drawing.Color.Green;
-            this.label1.Location = new System.Drawing.Point(402, 3);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 23);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "1";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -216,7 +216,7 @@ namespace Pac_Man
         private System.Windows.Forms.PictureBox live3;
         private System.Windows.Forms.Panel BottomPanel;
         private System.Windows.Forms.Panel StartPanel;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label Level;
         private System.Windows.Forms.Label LevelSign;
     }
 }

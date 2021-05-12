@@ -18,10 +18,12 @@ namespace Pac_Man
         Player player;
         Ghost red_ghost, blue_ghost, orange_ghost, pink_ghost;
         List<Door> doors = new List<Door>();
+        int level = 0;
         public Game()
         {
             InitializeComponent();
             InitializeScoreboard();
+            DisplayLevelCounter();
             TopPanel.Visible = false;
             BottomPanel.Visible = false;
             InitializeBoard();
@@ -197,6 +199,13 @@ namespace Pac_Man
         {
             this.scoreboard = new Scoreboard(Score);
         }
+        private void DisplayLevelCounter ()
+        {
+            this.level += 1;
+            if (this.level > 99)
+                this.Level.Text = "??";
+            else this.Level.Text = this.level.ToString();
+        }
         private async void CheckWinCondition ()
         {
             if (scoreboard.AllCoinsCollected()) 
@@ -204,9 +213,6 @@ namespace Pac_Man
                 await Task.Delay(1500);
                 MainGameTimer.Stop();
                 NextLevel();
-                await Task.Delay(3000);
-                InitializeGhosts();
-                MainGameTimer.Start();
             }
         }
         private void PlayerEvents ()
@@ -628,8 +634,10 @@ namespace Pac_Man
             InitializeGhosts();
             MainGameTimer.Start();
         }
-        private void NextLevel ()
+        private async void NextLevel ()
         {
+            await Task.Delay(3000);
+            DisplayLevelCounter();
             foreach (PictureBox p in BoardPanel.Controls)
             {
                 if (p is Coin || p is Powerup)
@@ -637,6 +645,7 @@ namespace Pac_Man
             }
             player.ResetPosition();
             InitializeGhosts();
+            MainGameTimer.Start();
         }
         private async void _InitializeGhost(Ghost ghost, int time)
         {

@@ -46,6 +46,7 @@ namespace Pac_Man
         public void ResetPosition ()
         {
             this.Location = this.initlocation;
+            this.direction = 0;
         }
         public void Weakened ()
         {
