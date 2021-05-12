@@ -11,7 +11,7 @@ namespace Pac_Man
     internal class Ghost : PictureBox
     {
         public int direction;
-        int speed;
+        public int speed;
         public bool initialmove;
         bool movedright = false;
         Random Rand = new Random();
@@ -21,6 +21,7 @@ namespace Pac_Man
             this.Location = new Point(16 * x, 16 * y);
             this.direction = 0;
             this.speed = 2;
+            this.Tag = 0;
             this.initialmove = false;
 
             if (colour == 'r')
@@ -36,6 +37,24 @@ namespace Pac_Man
             await Task.Delay(timetowait);
             this.direction = 2;
             this.initialmove = true;
+        }
+        public void Weakened ()
+        {
+            switch (this.direction)
+            {
+                case 1:
+                    this.Image = Properties.Resources.weak_ghost1;
+                    break;
+                case 2:
+                    this.Image = Properties.Resources.weak_ghost2;
+                    break;
+                case 3:
+                    this.Image = Properties.Resources.weak_ghost3;
+                    break;
+                case 4:
+                    this.Image = Properties.Resources.weak_ghost4;
+                    break;
+            }
         }
         public void UpdateGhostPosition ()
         {
@@ -357,7 +376,6 @@ namespace Pac_Man
             }
         }
 
-        //TODO: Implement a moving function based on player's position.
         public void PlayerPositionBasedMovement(Player player, TurningPoint point)
         {
             switch (point.paths)
@@ -441,5 +459,6 @@ namespace Pac_Man
                     break;
             }
         }
+
     }
 }

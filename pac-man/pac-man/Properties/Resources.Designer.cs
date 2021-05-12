@@ -163,6 +163,46 @@ namespace Pac_Man.Properties {
         /// <summary>
         ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap p_ghost1 {
+            get {
+                object obj = ResourceManager.GetObject("p_ghost1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap p_ghost2 {
+            get {
+                object obj = ResourceManager.GetObject("p_ghost2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap p_ghost3 {
+            get {
+                object obj = ResourceManager.GetObject("p_ghost3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap p_ghost4 {
+            get {
+                object obj = ResourceManager.GetObject("p_ghost4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pacman1 {
             get {
                 object obj = ResourceManager.GetObject("pacman1", resourceCulture);
@@ -196,6 +236,16 @@ namespace Pac_Man.Properties {
         internal static System.Drawing.Bitmap pacman4 {
             get {
                 object obj = ResourceManager.GetObject("pacman4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap powerup {
+            get {
+                object obj = ResourceManager.GetObject("powerup", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -476,6 +526,46 @@ namespace Pac_Man.Properties {
         internal static System.Drawing.Bitmap wall_93 {
             get {
                 object obj = ResourceManager.GetObject("wall_93", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap weak_ghost1 {
+            get {
+                object obj = ResourceManager.GetObject("weak_ghost1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap weak_ghost2 {
+            get {
+                object obj = ResourceManager.GetObject("weak_ghost2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap weak_ghost3 {
+            get {
+                object obj = ResourceManager.GetObject("weak_ghost3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap weak_ghost4 {
+            get {
+                object obj = ResourceManager.GetObject("weak_ghost4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

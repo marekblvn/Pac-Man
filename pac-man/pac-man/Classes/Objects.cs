@@ -123,7 +123,7 @@ namespace Pac_Man
     {
         public Powerup (int x, int y)
         {
-            this.BackColor = Color.Yellow;
+            this.Image = Properties.Resources.powerup;
             this.Visible = true;
             this.Size = new Size(6, 6);
             this.Location = new Point(16 * x + 5, 16 * y + 5);

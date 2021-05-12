@@ -160,6 +160,21 @@
   <data name="pacman4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pacman4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="powerup" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\powerup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="p_ghost1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\p_ghost1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="p_ghost2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\p_ghost2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="p_ghost3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\p_ghost3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="p_ghost4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\p_ghost4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="r_ghost1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\r_ghost1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -243,5 +258,17 @@
   </data>
   <data name="wall_93" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\wall-93.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="weak_ghost1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\weak-ghost1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="weak_ghost2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\weak-ghost2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="weak_ghost3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\weak-ghost3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="weak_ghost4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\weak-ghost4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

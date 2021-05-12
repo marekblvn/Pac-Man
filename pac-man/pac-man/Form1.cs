@@ -336,7 +336,9 @@ namespace Pac_Man
                             {
                                 obj.Visible = false;
                                 player.Tag = 2;
-                                player.RemovePowerup();
+                                red_ghost.Tag = 1;
+                                blue_ghost.Tag = 1;
+                                RemovePowerup();
                             }
                             break;
 
@@ -344,7 +346,7 @@ namespace Pac_Man
 
                             if (obj.Visible)
                             {
-                                PlayerGhostCollision();
+                                
                             }
                             break;
                     }
@@ -446,49 +448,63 @@ namespace Pac_Man
             }
 
         }
-        private async void PlayerGhostCollision ()
+        private async void RemovePowerup ()
         {
-            //if (player.powerup)
-            //do smthing
-            if ((int)player.Tag == 0)
-            {
-                player.Tag = 1;
-                player.lives -= 1;
-                await Task.Delay(2000);
-                player.Tag = 0;
-            }    
+            await Task.Delay(5000);
+            red_ghost.Tag = 0;
+            blue_ghost.Tag = 0;
+            player.Tag = 0;
         }
-        private void UpdateSprites ()
+        private async void PlayerGhostCollision (Ghost ghost)
         {
-            switch (red_ghost.direction)
+            //TODO: Implement collisions between ghosts and player (+ when player has powerup)   
+        }
+        private void UpdateGhostSprites ()
+        {
+            if ((int)red_ghost.Tag == 0)
             {
-                case 1:
-                    red_ghost.Image = Properties.Resources.r_ghost1;
-                    break;
-                case 2:
-                    red_ghost.Image = Properties.Resources.r_ghost2;
-                    break;
-                case 3:
-                    red_ghost.Image = Properties.Resources.r_ghost3;
-                    break;
-                case 4:
-                    red_ghost.Image = Properties.Resources.r_ghost4;
-                    break;
+                switch (red_ghost.direction)
+                {
+                    case 1:
+                        red_ghost.Image = Properties.Resources.r_ghost1;
+                        break;
+                    case 2:
+                        red_ghost.Image = Properties.Resources.r_ghost2;
+                        break;
+                    case 3:
+                        red_ghost.Image = Properties.Resources.r_ghost3;
+                        break;
+                    case 4:
+                        red_ghost.Image = Properties.Resources.r_ghost4;
+                        break;
+                }
             }
-            switch (blue_ghost.direction)
+            else if ((int)red_ghost.Tag == 1)
             {
-                case 1:
-                    blue_ghost.Image = Properties.Resources.b_ghost1;
-                    break;
-                case 2:
-                    blue_ghost.Image = Properties.Resources.b_ghost2;
-                    break;
-                case 3:
-                    blue_ghost.Image = Properties.Resources.b_ghost3;
-                    break;
-                case 4:
-                    blue_ghost.Image = Properties.Resources.b_ghost4;
-                    break;
+                red_ghost.Weakened();
+            }
+
+            if ((int)blue_ghost.Tag == 0)
+            {
+                switch (blue_ghost.direction)
+                {
+                    case 1:
+                        blue_ghost.Image = Properties.Resources.b_ghost1;
+                        break;
+                    case 2:
+                        blue_ghost.Image = Properties.Resources.b_ghost2;
+                        break;
+                    case 3:
+                        blue_ghost.Image = Properties.Resources.b_ghost3;
+                        break;
+                    case 4:
+                        blue_ghost.Image = Properties.Resources.b_ghost4;
+                        break;
+                }
+            }
+            else if ((int)blue_ghost.Tag == 1)
+            {
+                blue_ghost.Weakened();
             }
         }
         private void MainGameTick(object sender, EventArgs e)
@@ -498,11 +514,12 @@ namespace Pac_Man
             blue_ghost.UpdateGhostPosition();
             PlayerEvents();
             GhostEvents();
-            UpdateSprites();
+            UpdateGhostSprites();
             CheckPlayerLives();
             //CheckWinCondition();
         }
     }
     //TODO: Implement ghost moving + search algo
     //TODO: Implement transitions between stages (Ready - Playing - Ended)
+    //TODO: When player collects powerup, ghosts run away from him.
 }
