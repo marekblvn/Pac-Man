@@ -14,11 +14,13 @@ namespace Pac_Man
         public int speed;
         public bool initialmove;
         bool movedright = false;
+        Point initlocation;
         Random Rand = new Random();
         public Ghost(int x, int y, char colour)
         {
             this.Size = new Size(16, 16);
-            this.Location = new Point(16 * x, 16 * y);
+            this.initlocation = new Point(16 * x, 16 * y);
+            this.Location = this.initlocation;
             this.direction = 0;
             this.speed = 2;
             this.Tag = 0;
@@ -26,17 +28,24 @@ namespace Pac_Man
 
             if (colour == 'r')
                 this.Image = Properties.Resources.r_ghost2;
-            else if (colour == 'g')
-                this.BackColor = Color.Green;
+            else if (colour == 'o')
+                this.Image = Properties.Resources.o_ghost2;
             else if (colour == 'b')
                 this.Image = Properties.Resources.b_ghost2;
+            else if (colour == 'p')
+                this.Image = Properties.Resources.p_ghost2;
         }
 
         public async void Start (int timetowait)
         {
+            this.ResetPosition();
             await Task.Delay(timetowait);
             this.direction = 2;
             this.initialmove = true;
+        }
+        public void ResetPosition ()
+        {
+            this.Location = this.initlocation;
         }
         public void Weakened ()
         {

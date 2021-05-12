@@ -14,13 +14,15 @@ namespace Pac_Man
         public int newdirection = 0;
         public int speed;
         public int lives;
+        Point initlocation;
         public Player (int x, int y)
         {
             this.Visible = true;
             this.Tag = 0; // 0 -- normal; 1 -- hit by ghost and recovering; 2 -- powered up
             this.Image = Properties.Resources.pacman1;
             this.Size = new Size(16, 16);
-            this.Location = new Point(16 * x, 16 * y);
+            this.initlocation = new Point(16 * x, 16 * y);
+            this.Location = this.initlocation;
             this.direction = 1;
             this.speed = 4;
             this.lives = 3;
@@ -65,6 +67,11 @@ namespace Pac_Man
         {
             await Task.Delay(200);
             this.newdirection = 0;
+        }
+        public void ResetPosition ()
+        {
+            this.Location = this.initlocation;
+            this.direction = 1;
         }
     }
 }

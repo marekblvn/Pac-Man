@@ -12,6 +12,7 @@ namespace Pac_Man
         int score;
         private Label display;
         public int totalcoins;
+        int allcoins;
 
         public Scoreboard (Label display)
         {
@@ -23,7 +24,9 @@ namespace Pac_Man
         {
             this.score += 1;
             this.totalcoins -= 1;
-            this.display.Text = score.ToString();
+            if (this.score > 99999)
+                this.display.Text = "∞";
+            else this.display.Text = score.ToString();
         }
         public void ResetScore ()
         {
@@ -33,11 +36,13 @@ namespace Pac_Man
         public void AddCoin ()
         {
             this.totalcoins += 1;
+            this.allcoins += 1;
         }
         public bool AllCoinsCollected ()
         {
             if (this.totalcoins == 0)
             {
+                this.totalcoins = allcoins;
                 return true;
             }
             return false;

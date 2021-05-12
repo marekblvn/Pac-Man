@@ -16,15 +16,16 @@ namespace Pac_Man
         Board board = new Board();
         Scoreboard scoreboard;
         Player player;
-        Ghost red_ghost, blue_ghost;
+        Ghost red_ghost, blue_ghost, orange_ghost, pink_ghost;
         List<Door> doors = new List<Door>();
         public Game()
         {
             InitializeComponent();
             InitializeScoreboard();
+            TopPanel.Visible = false;
+            BottomPanel.Visible = false;
             InitializeBoard();
-            red_ghost.Start(5000);
-            blue_ghost.Start(5000);
+            StartPanel.BringToFront();
         }
 
         private void InitializeBoard ()
@@ -143,6 +144,16 @@ namespace Pac_Man
                             BoardPanel.Controls.Add(blue_ghost);
                             blue_ghost.BringToFront();
                             break;
+                        case 17:
+                            pink_ghost = new Ghost(x, y, 'p');
+                            BoardPanel.Controls.Add(pink_ghost);
+                            pink_ghost.BringToFront();
+                            break;
+                        case 18:
+                            orange_ghost = new Ghost(x, y, 'o');
+                            BoardPanel.Controls.Add(orange_ghost);
+                            orange_ghost.BringToFront();
+                            break;
                         case 23:
                             BoardPanel.Controls.Add(new Coin(x, y));
                             scoreboard.AddCoin();
@@ -186,12 +197,16 @@ namespace Pac_Man
         {
             this.scoreboard = new Scoreboard(Score);
         }
-        private void CheckWinCondition ()
+        private async void CheckWinCondition ()
         {
             if (scoreboard.AllCoinsCollected()) 
             {
-                MessageBox.Show("Level completed!");
-                MainGameTimer.Enabled = false;
+                await Task.Delay(1500);
+                MainGameTimer.Stop();
+                NextLevel();
+                await Task.Delay(3000);
+                InitializeGhosts();
+                MainGameTimer.Start();
             }
         }
         private void PlayerEvents ()
@@ -338,6 +353,8 @@ namespace Pac_Man
                                 player.Tag = 2;
                                 red_ghost.Tag = 1;
                                 blue_ghost.Tag = 1;
+                                pink_ghost.Tag = 1;
+                                orange_ghost.Tag = 1;
                                 RemovePowerup();
                             }
                             break;
@@ -377,13 +394,31 @@ namespace Pac_Man
                         TurningPoint point = obj as TurningPoint;
 
                         if (red_ghost.Location == point.Location)
-                            red_ghost.RandomMovement(point);
+                            red_ghost.PlayerPositionBasedMovement(this.player, point);
+
+                        if (orange_ghost.Location == point.Location)
+                            orange_ghost.RandomMovement(point);
+
+                        if (pink_ghost.Location == point.Location)
+                            pink_ghost.RightLeftMovement(point);
 
                         if (blue_ghost.Location == point.Location)
-                            blue_ghost.PlayerPositionBasedMovement(this.player, point);
+                            blue_ghost.RightLeftMovement(point);
+
                         break;
 
                     case Wall:
+
+                        if (pink_ghost.Bounds.IntersectsWith(obj.Bounds) && pink_ghost.initialmove)
+                        {
+                            int rnum = rand.Next(10);
+                            if (rnum <= 4)
+                                pink_ghost.direction = 3;
+                            else if (rnum > 4)
+                                pink_ghost.direction = 1;
+                            pink_ghost.Top = obj.Top + 16;
+                            pink_ghost.initialmove = false;
+                        }
 
                         if (red_ghost.Bounds.IntersectsWith(obj.Bounds) && red_ghost.initialmove)
                         {
@@ -396,6 +431,18 @@ namespace Pac_Man
                             red_ghost.initialmove = false;
 
                         }
+
+                        if (orange_ghost.Bounds.IntersectsWith(obj.Bounds) && orange_ghost.initialmove)
+                        {
+                            int rnum = rand.Next(10);
+                            if (rnum <= 4)
+                                orange_ghost.direction = 3;
+                            else if (rnum > 4)
+                                orange_ghost.direction = 1;
+                            orange_ghost.Top = obj.Top + 16;
+                            orange_ghost.initialmove = false;
+                        }
+
                         if (blue_ghost.Bounds.IntersectsWith(obj.Bounds) && blue_ghost.initialmove)
                         {
                             int rnum = rand.Next(10);
@@ -429,6 +476,9 @@ namespace Pac_Man
                 case Keys.Down:
                     player.direction = 4;
                     break;
+                case Keys.Enter:
+                    StartGame();
+                    break;
             }
             player.speed = 4;
         }
@@ -453,6 +503,8 @@ namespace Pac_Man
             await Task.Delay(5000);
             red_ghost.Tag = 0;
             blue_ghost.Tag = 0;
+            orange_ghost.Tag = 0;
+            pink_ghost.Tag = 0;
             player.Tag = 0;
         }
         private async void PlayerGhostCollision (Ghost ghost)
@@ -506,20 +558,104 @@ namespace Pac_Man
             {
                 blue_ghost.Weakened();
             }
+
+            if ((int)pink_ghost.Tag == 0)
+            {
+                switch (pink_ghost.direction)
+                {
+                    case 1:
+                        pink_ghost.Image = Properties.Resources.p_ghost1;
+                        break;
+                    case 2:
+                        pink_ghost.Image = Properties.Resources.p_ghost2;
+                        break;
+                    case 3:
+                        pink_ghost.Image = Properties.Resources.p_ghost3;
+                        break;
+                    case 4:
+                        pink_ghost.Image = Properties.Resources.p_ghost4;
+                        break;
+                }
+            }
+            else if ((int)pink_ghost.Tag == 1)
+            {
+                pink_ghost.Weakened();
+            }
+
+            if ((int)orange_ghost.Tag == 0)
+            {
+                switch (orange_ghost.direction)
+                {
+                    case 1:
+                        orange_ghost.Image = Properties.Resources.o_ghost1;
+                        break;
+                    case 2:
+                        orange_ghost.Image = Properties.Resources.o_ghost2;
+                        break;
+                    case 3:
+                        orange_ghost.Image = Properties.Resources.o_ghost3;
+                        break;
+                    case 4:
+                        orange_ghost.Image = Properties.Resources.o_ghost4;
+                        break;
+                }
+            }
+            else if ((int)orange_ghost.Tag == 1)
+            {
+                orange_ghost.Weakened();
+            }
         }
         private void MainGameTick(object sender, EventArgs e)
         {
             player.UpdatePlayerPosition();
+            pink_ghost.UpdateGhostPosition();
+            orange_ghost.UpdateGhostPosition();
             red_ghost.UpdateGhostPosition();
             blue_ghost.UpdateGhostPosition();
             PlayerEvents();
             GhostEvents();
             UpdateGhostSprites();
             CheckPlayerLives();
-            //CheckWinCondition();
+            CheckWinCondition();
+        }
+        private async void StartGame ()
+        {
+            StartPanel.Visible = false;
+            BoardPanel.Controls.Remove(StartPanel);
+            TopPanel.Visible = true;
+            BottomPanel.Visible = true;
+            await Task.Delay(3000);
+            InitializeGhosts();
+            MainGameTimer.Start();
+        }
+        private void NextLevel ()
+        {
+            foreach (PictureBox p in BoardPanel.Controls)
+            {
+                if (p is Coin || p is Powerup)
+                    p.Visible = true;
+            }
+            player.ResetPosition();
+            InitializeGhosts();
+        }
+        private async void _InitializeGhost(Ghost ghost, int time)
+        {
+            ghost.Start(time);
+            await Task.Delay(time);
+            foreach (Door d in doors)
+                d.Visible = false;
+            await Task.Delay(1000);
+            foreach (Door d in doors)
+                d.Visible = true;
+        }
+        private void InitializeGhosts ()
+        {
+            _InitializeGhost(blue_ghost, 2000);
+            _InitializeGhost(pink_ghost, 8000);
+            _InitializeGhost(orange_ghost, 14000);
+            _InitializeGhost(red_ghost, 20000);
         }
     }
-    //TODO: Implement ghost moving + search algo
-    //TODO: Implement transitions between stages (Ready - Playing - Ended)
+    //FIXME: When all coins are collected, ghosts dont restart properly.
     //TODO: When player collects powerup, ghosts run away from him.
 }

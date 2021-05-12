@@ -293,6 +293,16 @@ namespace Pac_Man.Properties {
         /// <summary>
         ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap StartMenu {
+            get {
+                object obj = ResourceManager.GetObject("StartMenu", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap wall_40 {
             get {
                 object obj = ResourceManager.GetObject("wall_40", resourceCulture);
