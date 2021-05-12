@@ -20,7 +20,7 @@ namespace Pac_Man
             this.Size = new Size(16, 16);
             this.Location = new Point(16 * x, 16 * y);
             this.direction = 0;
-            this.speed = 4;
+            this.speed = 2;
             this.initialmove = false;
 
             if (colour == 'r')
@@ -56,6 +56,11 @@ namespace Pac_Man
                 default:
                     break;
             }
+
+            if (this.Left < -8)
+                this.Left = 440;
+            else if (this.Left > 440)
+                this.Left = -8;
         }
         public void RandomMovement (TurningPoint point)
         {
@@ -352,9 +357,89 @@ namespace Pac_Man
             }
         }
 
+        //TODO: Implement a moving function based on player's position.
         public void PlayerPositionBasedMovement(Player player, TurningPoint point)
         {
-            //TODO: Implement a moving function based on players position
+            switch (point.paths)
+            {
+                case 2:
+                    switch (this.direction)
+                    {
+                        case 1:
+                            if (point.up)
+                                this.direction = 2;
+                            else if (point.down)
+                                this.direction = 4;
+                            break;
+                        case 2:
+                            if (point.right)
+                                this.direction = 1;
+                            else if (point.left)
+                                this.direction = 3;
+                            break;
+                        case 3:
+                            if (point.down)
+                                this.direction = 4;
+                            else if (point.up)
+                                this.direction = 2;
+                            break;
+                        case 4:
+                            if (point.left)
+                                this.direction = 3;
+                            else if (point.right)
+                                this.direction = 1;
+                            break;
+                    }
+                    break;
+                case 3:
+                    if (!point.right)
+                    {
+                        if (player.Location.Y < this.Location.Y)
+                            this.direction = 2;
+                        else if (player.Location.Y > this.Location.Y)
+                            this.direction = 4;
+                        else
+                            this.direction = 3;
+                    }
+                    else if (!point.left)
+                    {
+                        if (player.Location.Y < this.Location.Y)
+                            this.direction = 2;
+                        else if (player.Location.Y > this.Location.Y)
+                            this.direction = 4;
+                        else
+                            this.direction = 1;
+                    }
+                    else if (!point.up)
+                    {
+                        if (player.Location.X < this.Location.X)
+                            this.direction = 3;
+                        else if (player.Location.X > this.Location.X)
+                            this.direction = 1;
+                        else
+                            this.direction = 4;
+                    }
+                    else if (!point.down)
+                    {
+                        if (player.Location.X < this.Location.X)
+                            this.direction = 3;
+                        else if (player.Location.X > this.Location.X)
+                            this.direction = 1;
+                        else
+                            this.direction = 2;
+                    }
+                    break;
+                case 4:
+                    if (player.Location.Y < this.Location.Y)
+                        this.direction = 2;
+                    else if (player.Location.Y > this.Location.Y)
+                        this.direction = 4;
+                    else if (player.Location.X < this.Location.X)
+                        this.direction = 3;
+                    else if (player.Location.X > this.Location.X)
+                        this.direction = 1;
+                    break;
+            }
         }
     }
 }

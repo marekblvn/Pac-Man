@@ -18,7 +18,7 @@ namespace Pac_Man
         {
             this.Visible = true;
             this.Tag = 0; // 0 -- normal; 1 -- hit by ghost and recovering; 2 -- powered up
-            this.Image = Properties.Resources.pacman;
+            this.Image = Properties.Resources.pacman1;
             this.Size = new Size(16, 16);
             this.Location = new Point(16 * x, 16 * y);
             this.direction = 1;
@@ -40,6 +40,24 @@ namespace Pac_Man
                     break;
                 case 4:
                     this.Top += this.speed;
+                    break;
+            }
+        }
+        public void UpdateSprite ()
+        {
+            switch (direction)
+            {
+                case 1:
+                    this.Image = Properties.Resources.pacman1;
+                    break;
+                case 2:
+                    this.Image = Properties.Resources.pacman2;
+                    break;
+                case 3:
+                    this.Image = Properties.Resources.pacman3;
+                    break;
+                case 4:
+                    this.Image = Properties.Resources.pacman4;
                     break;
             }
         }

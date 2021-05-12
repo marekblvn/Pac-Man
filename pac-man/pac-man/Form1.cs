@@ -203,6 +203,7 @@ namespace Pac_Man
                     switch (obj)
                     {
                         case TurningPoint:
+
                             TurningPoint point = obj as TurningPoint;
                             if (player.Location == point.Location)
                             {
@@ -291,6 +292,7 @@ namespace Pac_Man
                             break;
 
                         case Door:
+
                             if (player.direction == 1 && obj.Left < player.Left + 16)
                             {
                                 player.Left = obj.Left - 16;
@@ -320,6 +322,7 @@ namespace Pac_Man
 
 
                         case Coin:
+
                             if (obj.Visible)
                             {
                                 obj.Visible = false;
@@ -328,6 +331,7 @@ namespace Pac_Man
                             break;
 
                         case Powerup:
+
                             if (obj.Visible)
                             {
                                 obj.Visible = false;
@@ -337,6 +341,7 @@ namespace Pac_Man
                             break;
 
                         case Ghost:
+
                             if (obj.Visible)
                             {
                                 PlayerGhostCollision();
@@ -355,6 +360,8 @@ namespace Pac_Man
             {
                 player.Left = -8;
             }
+
+            player.UpdateSprite();
         }
 
         private void GhostEvents ()
@@ -371,7 +378,7 @@ namespace Pac_Man
                             red_ghost.RandomMovement(point);
 
                         if (blue_ghost.Location == point.Location)
-                            blue_ghost.RightLeftMovement(point);
+                            blue_ghost.PlayerPositionBasedMovement(this.player, point);
                         break;
 
                     case Wall:
@@ -400,16 +407,6 @@ namespace Pac_Man
                         break;
                 }
             }
-
-            if (red_ghost.Left < -8)
-                red_ghost.Left = 440;
-            else if (red_ghost.Left + 8 > 448)
-                red_ghost.Left = -8;
-
-            if (blue_ghost.Left < -8)
-                blue_ghost.Left = 440;
-            else if (blue_ghost.Left + 8 > 448)
-                blue_ghost.Left = -8;
         }
 
         private void Key_Down(object sender, KeyEventArgs e)
