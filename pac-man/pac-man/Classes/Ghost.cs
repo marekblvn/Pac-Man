@@ -66,6 +66,24 @@ namespace Pac_Man
                     break;
             }
         }
+        public void Dead ()
+        {
+            switch (this.direction)
+            {
+                case 1:
+                    this.Image = Properties.Resources.dead_ghost_1;
+                    break;
+                case 2:
+                    this.Image = Properties.Resources.dead_ghost_2;
+                    break;
+                case 3:
+                    this.Image = Properties.Resources.dead_ghost_3;
+                    break;
+                case 4:
+                    this.Image = Properties.Resources.dead_ghost_4;
+                    break;
+            }
+        }
         public void UpdateGhostPosition ()
         {
             switch (this.direction)

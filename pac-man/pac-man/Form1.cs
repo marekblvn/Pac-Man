@@ -573,6 +573,10 @@ namespace Pac_Man
             {
                 red_ghost.Weakened();
             }
+            else if ((int)red_ghost.Tag == 1)
+            {
+                red_ghost.Dead();
+            }
 
             if ((int)blue_ghost.Tag == 0)
             {
@@ -595,6 +599,10 @@ namespace Pac_Man
             else if ((int)blue_ghost.Tag == 2)
             {
                 blue_ghost.Weakened();
+            }
+            else if ((int)blue_ghost.Tag == 1)
+            {
+                blue_ghost.Dead();
             }
 
             if ((int)pink_ghost.Tag == 0)
@@ -619,6 +627,10 @@ namespace Pac_Man
             {
                 pink_ghost.Weakened();
             }
+            else if ((int)pink_ghost.Tag == 1)
+            {
+                pink_ghost.Dead();
+            }
 
             if ((int)orange_ghost.Tag == 0)
             {
@@ -641,6 +653,10 @@ namespace Pac_Man
             else if ((int)orange_ghost.Tag == 2)
             {
                 orange_ghost.Weakened();
+            }
+            else if ((int)orange_ghost.Tag == 1)
+            {
+                orange_ghost.Dead();
             }
         }
         private void MainGameTick(object sender, EventArgs e)
