@@ -35,7 +35,16 @@ namespace Pac_Man
             else if (colour == 'p')
                 this.Image = Properties.Resources.p_ghost2;
         }
-
+        private async void Revive ()
+        {
+            int rnum = Rand.Next(2);
+            this.direction = 0;
+            await Task.Delay(2000);
+            this.Tag = 0;
+            if (rnum == 0)
+                this.direction = 1;
+            else this.direction = 3;
+        }
         public async void Start (int timetowait)
         {
             this.ResetPosition();
@@ -108,6 +117,9 @@ namespace Pac_Man
                 this.Left = 440;
             else if (this.Left > 440)
                 this.Left = -8;
+
+            if (this.Location.X == 208 && this.Location.Y == 176 && (int)this.Tag == 1)
+                this.Revive();
         }
         public void RandomMovement (TurningPoint point)
         {
@@ -585,6 +597,107 @@ namespace Pac_Man
                         this.direction = 1;
                     else if (player.Location.X > this.Location.X)
                         this.direction = 3;
+                    break;
+            }
+        }
+
+        public void LimpHome (TurningPoint point)
+        {
+            int rnum = Rand.Next(10);
+            switch (point.paths)
+            {
+                case 2:
+                    switch (this.direction)
+                    {
+                        case 1:
+                            if (point.up)
+                                this.direction = 2;
+                            else if (point.down)
+                                this.direction = 4;
+                            break;
+                        case 2:
+                            if (point.left)
+                                this.direction = 3;
+                            else if (point.right)
+                                this.direction = 1;
+                            break;
+                        case 3:
+                            if (point.down)
+                                this.direction = 4;
+                            else if (point.up)
+                                this.direction = 2;
+                            break;
+                        case 4:
+                            if (point.right)
+                                this.direction = 1;
+                            else if (point.left)
+                                this.direction = 3;
+                            break;
+                    }
+                    break;
+                case 3:
+                    if (!point.right)
+                    {
+                        if (176 < this.Location.Y)
+                            this.direction = 2;
+                        else if (176 > this.Location.Y)
+                            this.direction = 4;
+                        else
+                        {
+                            if (rnum <= 4)
+                                this.direction = 2;
+                            else this.direction = 4;
+                        }
+                    }
+                    else if (!point.left)
+                    {
+                        if (176 < this.Location.Y)
+                            this.direction = 2;
+                        else if (176 > this.Location.Y)
+                            this.direction = 4;
+                        else
+                        {
+                            if (rnum <= 4)
+                                this.direction = 2;
+                            else this.direction = 4;
+                        }
+                    }
+                    else if (!point.up)
+                    {
+                        if (208 < this.Location.X)
+                            this.direction = 3;
+                        else if (208 > this.Location.X)
+                            this.direction = 1;
+                        else
+                        {
+                            if (rnum <= 4)
+                                this.direction = 3;
+                            else this.direction = 1;
+                        }
+                    }
+                    else if (!point.down)
+                    {
+                        if (208 < this.Location.X)
+                            this.direction = 3;
+                        else if (208 > this.Location.X)
+                            this.direction = 1;
+                        else
+                        {
+                            if (rnum <= 4)
+                                this.direction = 3;
+                            else this.direction = 1;
+                        }
+                    }
+                    break;
+                case 4:
+                    if (176 < this.Location.Y)
+                        this.direction = 2;
+                    else if (176 > this.Location.Y)
+                        this.direction = 4;
+                    else if (208 < this.Location.X)
+                        this.direction = 3;
+                    else if (208 > this.Location.X)
+                        this.direction = 1;
                     break;
             }
         }

@@ -406,7 +406,7 @@ namespace Pac_Man
                             else if ((int)red_ghost.Tag == 2)
                                 red_ghost.RunningAway(this.player, point);
                             else if ((int)red_ghost.Tag == 1)
-                            { } //TODO: Add "limp home" function when ghost is eaten
+                                red_ghost.LimpHome(point);
                         }
 
                         if (orange_ghost.Location == point.Location)
@@ -415,6 +415,8 @@ namespace Pac_Man
                                 orange_ghost.RandomMovement(point);
                             else if ((int)orange_ghost.Tag == 2)
                                 orange_ghost.RunningAway(this.player, point);
+                            else if ((int)orange_ghost.Tag == 1)
+                                orange_ghost.LimpHome(point);
                         }
 
                         if (pink_ghost.Location == point.Location)
@@ -423,6 +425,8 @@ namespace Pac_Man
                                 pink_ghost.RightLeftMovement(point);
                             else if ((int)pink_ghost.Tag == 2)
                                 pink_ghost.RunningAway(this.player, point);
+                            else if ((int)pink_ghost.Tag == 1)
+                                pink_ghost.LimpHome(point);
                         }
 
                         if (blue_ghost.Location == point.Location)
@@ -431,6 +435,8 @@ namespace Pac_Man
                                 blue_ghost.RightLeftMovement(point);
                             else if ((int)blue_ghost.Tag == 2)
                                 blue_ghost.RunningAway(this.player, point);
+                            else if ((int)blue_ghost.Tag == 1)
+                                blue_ghost.LimpHome(point);
                         }
 
                         break;
@@ -529,10 +535,14 @@ namespace Pac_Man
         private async void RemovePowerup ()
         {
             await Task.Delay(5000);
-            red_ghost.Tag = 0;
-            blue_ghost.Tag = 0;
-            orange_ghost.Tag = 0;
-            pink_ghost.Tag = 0;
+            if ((int)red_ghost.Tag == 2)
+                red_ghost.Tag = 0;
+            if ((int)blue_ghost.Tag == 2)
+                blue_ghost.Tag = 0;
+            if ((int)orange_ghost.Tag == 2)
+                orange_ghost.Tag = 0;
+            if ((int)pink_ghost.Tag == 2)
+                pink_ghost.Tag = 0;
             player.Tag = 0;
         }
         private async void PlayerGhostCollision (PictureBox ghost)
