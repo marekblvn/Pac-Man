@@ -357,10 +357,10 @@ namespace Pac_Man
                             {
                                 obj.Visible = false;
                                 player.Tag = 2;
-                                red_ghost.Tag = 1;
-                                blue_ghost.Tag = 1;
-                                pink_ghost.Tag = 1;
-                                orange_ghost.Tag = 1;
+                                red_ghost.Tag = 2;
+                                blue_ghost.Tag = 2;
+                                pink_ghost.Tag = 2;
+                                orange_ghost.Tag = 2;
                                 RemovePowerup();
                             }
                             break;
@@ -369,7 +369,7 @@ namespace Pac_Man
 
                             if (obj.Visible)
                             {
-                                
+                                PlayerGhostCollision(obj);
                             }
                             break;
                     }
@@ -400,16 +400,38 @@ namespace Pac_Man
                         TurningPoint point = obj as TurningPoint;
 
                         if (red_ghost.Location == point.Location)
-                            red_ghost.PlayerPositionBasedMovement(this.player, point);
+                        {
+                            if ((int)red_ghost.Tag == 0)
+                                red_ghost.PlayerPositionBasedMovement(this.player, point);
+                            else if ((int)red_ghost.Tag == 2)
+                                red_ghost.RunningAway(this.player, point);
+                            else if ((int)red_ghost.Tag == 1)
+                            { } //TODO: Add "limp home" function when ghost is eaten
+                        }
 
                         if (orange_ghost.Location == point.Location)
-                            orange_ghost.RandomMovement(point);
+                        {
+                            if ((int)orange_ghost.Tag == 0)
+                                orange_ghost.RandomMovement(point);
+                            else if ((int)orange_ghost.Tag == 2)
+                                orange_ghost.RunningAway(this.player, point);
+                        }
 
                         if (pink_ghost.Location == point.Location)
-                            pink_ghost.RightLeftMovement(point);
+                        {
+                            if ((int)pink_ghost.Tag == 0)
+                                pink_ghost.RightLeftMovement(point);
+                            else if ((int)pink_ghost.Tag == 2)
+                                pink_ghost.RunningAway(this.player, point);
+                        }
 
                         if (blue_ghost.Location == point.Location)
-                            blue_ghost.RightLeftMovement(point);
+                        {
+                            if ((int)blue_ghost.Tag == 0)
+                                blue_ghost.RightLeftMovement(point);
+                            else if ((int)blue_ghost.Tag == 2)
+                                blue_ghost.RunningAway(this.player, point);
+                        }
 
                         break;
 
@@ -513,9 +535,19 @@ namespace Pac_Man
             pink_ghost.Tag = 0;
             player.Tag = 0;
         }
-        private async void PlayerGhostCollision (Ghost ghost)
+        private async void PlayerGhostCollision (PictureBox ghost)
         {
-            //TODO: Implement collisions between ghosts and player (+ when player has powerup)   
+            if ((int)player.Tag == 2)
+            {
+                ghost.Tag = 1;
+            }
+            else if ((int)player.Tag == 0)
+            {
+                player.lives -= 1;
+                player.Tag = 1;
+                await Task.Delay(3000);
+                player.Tag = 0;
+            }
         }
         private void UpdateGhostSprites ()
         {
@@ -537,7 +569,7 @@ namespace Pac_Man
                         break;
                 }
             }
-            else if ((int)red_ghost.Tag == 1)
+            else if ((int)red_ghost.Tag == 2)
             {
                 red_ghost.Weakened();
             }
@@ -560,7 +592,7 @@ namespace Pac_Man
                         break;
                 }
             }
-            else if ((int)blue_ghost.Tag == 1)
+            else if ((int)blue_ghost.Tag == 2)
             {
                 blue_ghost.Weakened();
             }
@@ -583,7 +615,7 @@ namespace Pac_Man
                         break;
                 }
             }
-            else if ((int)pink_ghost.Tag == 1)
+            else if ((int)pink_ghost.Tag == 2)
             {
                 pink_ghost.Weakened();
             }
@@ -606,7 +638,7 @@ namespace Pac_Man
                         break;
                 }
             }
-            else if ((int)orange_ghost.Tag == 1)
+            else if ((int)orange_ghost.Tag == 2)
             {
                 orange_ghost.Weakened();
             }
@@ -665,6 +697,5 @@ namespace Pac_Man
             _InitializeGhost(red_ghost, 20000);
         }
     }
-    //FIXME: When all coins are collected, ghosts dont restart properly.
-    //TODO: When player collects powerup, ghosts run away from him.
+    //TODO: When ghost die, make them go back to center
 }
