@@ -18,14 +18,17 @@ namespace Pac_Man
         Player player;
         Ghost red_ghost, blue_ghost, orange_ghost, pink_ghost;
         List<Door> doors = new List<Door>();
+        List<Fruit> fruits = new List<Fruit>();
         int level = 0;
-        public Game()
+        int gamestate;
+        public Game ()
         {
             InitializeComponent();
             InitializeScoreboard();
             DisplayLevelCounter();
             TopPanel.Visible = false;
             BottomPanel.Visible = false;
+            this.gamestate = 0;
             InitializeBoard();
             StartPanel.BringToFront();
         }
@@ -348,6 +351,23 @@ namespace Pac_Man
                             {
                                 obj.Visible = false;
                                 scoreboard.IncrementScore();
+                                SpawnFruit(obj);
+                            }
+                            break;
+
+                        case Fruit:
+
+                            if (obj.Visible)
+                            {
+                                obj.Visible = false;
+                                if ((int)obj.Tag == 0)
+                                    this.scoreboard.IncrementScoreByAmount(50);
+                                else if ((int)obj.Tag == 1)
+                                    this.scoreboard.IncrementScoreByAmount(100);
+                                else if ((int)obj.Tag == 2)
+                                    this.scoreboard.IncrementScoreByAmount(500);
+                                BoardPanel.Controls.Remove(obj);
+                                fruits.Remove(obj as Fruit);
                             }
                             break;
 
@@ -406,27 +426,31 @@ namespace Pac_Man
                             else if ((int)red_ghost.Tag == 2)
                                 red_ghost.RunningAway(this.player, point);
                             else if ((int)red_ghost.Tag == 1)
-                                red_ghost.LimpHome(point);
+                                red_ghost.RandomMovement(point);
                         }
 
                         if (orange_ghost.Location == point.Location)
                         {
-                            if ((int)orange_ghost.Tag == 0)
+                            if ((int)orange_ghost.Tag == 0 && this.level < 2)
                                 orange_ghost.RandomMovement(point);
+                            else if ((int)orange_ghost.Tag == 0 && this.level >= 2)
+                                orange_ghost.PlayerPositionBasedMovement(this.player, point);
                             else if ((int)orange_ghost.Tag == 2)
                                 orange_ghost.RunningAway(this.player, point);
                             else if ((int)orange_ghost.Tag == 1)
-                                orange_ghost.LimpHome(point);
+                                orange_ghost.RandomMovement(point);
                         }
 
                         if (pink_ghost.Location == point.Location)
                         {
-                            if ((int)pink_ghost.Tag == 0)
+                            if ((int)pink_ghost.Tag == 0 && this.level < 4)
                                 pink_ghost.RightLeftMovement(point);
+                            if ((int)pink_ghost.Tag == 0 && this.level >= 4)
+                                pink_ghost.PlayerPositionBasedMovement(this.player, point);
                             else if ((int)pink_ghost.Tag == 2)
                                 pink_ghost.RunningAway(this.player, point);
                             else if ((int)pink_ghost.Tag == 1)
-                                pink_ghost.LimpHome(point);
+                                pink_ghost.RandomMovement(point);
                         }
 
                         if (blue_ghost.Location == point.Location)
@@ -436,7 +460,7 @@ namespace Pac_Man
                             else if ((int)blue_ghost.Tag == 2)
                                 blue_ghost.RunningAway(this.player, point);
                             else if ((int)blue_ghost.Tag == 1)
-                                blue_ghost.LimpHome(point);
+                                blue_ghost.RandomMovement(point);
                         }
 
                         break;
@@ -492,7 +516,7 @@ namespace Pac_Man
             }
         }
 
-        private void Key_Down(object sender, KeyEventArgs e)
+        private void Key_Down (object sender, KeyEventArgs e)
         {
             player.backupdirection = player.direction;
 
@@ -511,7 +535,10 @@ namespace Pac_Man
                     player.direction = 4;
                     break;
                 case Keys.Enter:
-                    StartGame();
+                    if (this.gamestate == 0)
+                        StartGame();
+                    else if (this.gamestate == 2)
+                        RestartGame();
                     break;
             }
             player.speed = 4;
@@ -523,12 +550,9 @@ namespace Pac_Man
             else if (player.lives == 1)
                 live2.Visible = false;
             else if (player.lives == 0)
-                live3.Visible = false;
-            else if (player.lives == -1)
             {
-                live1.Visible = true;
-                live2.Visible = true;
-                live3.Visible = true;
+                live3.Visible = false;
+                GameOver();
             }
 
         }
@@ -544,6 +568,15 @@ namespace Pac_Man
             if ((int)pink_ghost.Tag == 2)
                 pink_ghost.Tag = 0;
             player.Tag = 0;
+            await Task.Delay(5000);
+            if ((int)red_ghost.Tag == 1)
+                red_ghost.Tag = 0;
+            if ((int)blue_ghost.Tag == 1)
+                blue_ghost.Tag = 0;
+            if ((int)orange_ghost.Tag == 1)
+                orange_ghost.Tag = 0;
+            if ((int)pink_ghost.Tag == 1)
+                pink_ghost.Tag = 0;
         }
         private async void PlayerGhostCollision (PictureBox ghost)
         {
@@ -669,7 +702,7 @@ namespace Pac_Man
                 orange_ghost.Dead();
             }
         }
-        private void MainGameTick(object sender, EventArgs e)
+        private void MainGameTick (object sender, EventArgs e)
         {
             player.UpdatePlayerPosition();
             pink_ghost.UpdateGhostPosition();
@@ -690,6 +723,7 @@ namespace Pac_Man
             BottomPanel.Visible = true;
             await Task.Delay(3000);
             InitializeGhosts();
+            this.gamestate = 1;
             MainGameTimer.Start();
         }
         private async void NextLevel ()
@@ -701,11 +735,15 @@ namespace Pac_Man
                 if (p is Coin || p is Powerup)
                     p.Visible = true;
             }
+            foreach (Fruit f in fruits)
+            {
+                BoardPanel.Controls.Remove(f);
+            }
             player.ResetPosition();
             InitializeGhosts();
             MainGameTimer.Start();
         }
-        private async void _InitializeGhost(Ghost ghost, int time)
+        private async void _InitializeGhost (Ghost ghost, int time)
         {
             ghost.Start(time);
             await Task.Delay(time);
@@ -722,6 +760,61 @@ namespace Pac_Man
             _InitializeGhost(orange_ghost, 14000);
             _InitializeGhost(red_ghost, 20000);
         }
+        private async void RestartGame ()
+        {
+            await Task.Delay(3000);
+            BoardPanel.Controls.Clear();
+            InitializeBoard();
+            this.level = 1;
+            this.player.lives = 3;
+            this.scoreboard.ResetScore();
+            player.ResetPosition();
+            InitializeGhosts();
+            this.gamestate = 1;
+            this.LevelSign.Visible = true;
+            this.Level.Text = this.level.ToString();
+            ResetLives();
+            this.Level.Visible = true;
+            this.BottomPanel.Visible = true;
+            MainGameTimer.Start();
+        }
+        private void GameOver ()
+        {
+            Panel p = new Panel();
+            p.Size = new Size(448, 496);
+            p.Location = new Point(-5, 10);
+            p.BackgroundImage = Properties.Resources.EndMenu;
+            
+            MainGameTimer.Stop();
+            this.red_ghost.Visible = false;
+            this.blue_ghost.Visible = false;
+            this.orange_ghost.Visible = false;
+            this.pink_ghost.Visible = false;
+            this.LevelSign.Visible = false;
+            this.Level.Visible = false;
+            this.BottomPanel.Visible = false;
+            BoardPanel.Controls.Clear();
+            BoardPanel.Controls.Add(p);
+            p.BringToFront();
+            this.gamestate = 2;
+        }
+        private async void SpawnFruit (PictureBox obj)
+        {
+            await Task.Delay(6000);
+            int rnum = rand.Next(100);
+            if (rnum <= 2)
+            {
+                Fruit f = new Fruit(obj.Location);
+                BoardPanel.Controls.Add(f);
+                fruits.Add(f);
+            }
+
+        }
+        private void ResetLives ()
+        {
+            this.live1.Visible = true;
+            this.live2.Visible = true;
+            this.live3.Visible = true;
+        }
     }
-    //TODO: When ghost die, make them go back to center
 }

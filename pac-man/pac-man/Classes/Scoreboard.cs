@@ -28,6 +28,13 @@ namespace Pac_Man
                 this.display.Text = "∞";
             else this.display.Text = score.ToString();
         }
+        public void IncrementScoreByAmount (int amount)
+        {
+            this.score += amount;
+            if (this.score > 99999)
+                this.display.Text = "∞";
+            else this.display.Text = score.ToString();
+        }
         public void ResetScore ()
         {
             this.score = 0;
@@ -36,7 +43,7 @@ namespace Pac_Man
         public void AddCoin ()
         {
             this.totalcoins += 1;
-            this.allcoins += 1;
+            this.allcoins = this.totalcoins;
         }
         public bool AllCoinsCollected ()
         {

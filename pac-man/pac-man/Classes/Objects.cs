@@ -115,9 +115,31 @@ namespace Pac_Man
         }
     }
     //TODO: Implement fruit
-    internal class Fruit : PictureBox
+    internal class Fruit : PictureBox // 0 -- Banana; 1 -- Strawberry; 2 -- Cherry
     {
-
+        Random Rand = new Random();
+        public Fruit (Point location)
+        {
+            this.Visible = true;
+            this.Size = new Size(15, 15);
+            this.Location = new Point(location.X - 5, location.Y - 5);
+            int rnum = Rand.Next(9);
+            if (rnum <= 2)
+            {
+                this.Image = Properties.Resources.banana;
+                this.Tag = 0;
+            }
+            else if (rnum > 2 && rnum <= 5)
+            {
+                this.Image = Properties.Resources.strawberry;
+                this.Tag = 1;
+            }
+            else if (rnum > 5 && rnum < 9)
+            {
+                this.Image = Properties.Resources.cherry;
+                this.Tag = 2;
+            }
+        }
     }
     internal class Powerup : PictureBox
     {
