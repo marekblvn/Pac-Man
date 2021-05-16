@@ -21,6 +21,7 @@ namespace Pac_Man
         List<Fruit> fruits = new List<Fruit>();
         int level = 0;
         int gamestate;
+        bool paused = false;
         public Game ()
         {
             InitializeComponent();
@@ -377,10 +378,14 @@ namespace Pac_Man
                             {
                                 obj.Visible = false;
                                 player.Tag = 2;
-                                red_ghost.Tag = 2;
-                                blue_ghost.Tag = 2;
-                                pink_ghost.Tag = 2;
-                                orange_ghost.Tag = 2;
+                                if ((int)red_ghost.Tag == 0)
+                                    red_ghost.Tag = 2;
+                                if ((int)blue_ghost.Tag == 0)
+                                    blue_ghost.Tag = 2;
+                                if ((int)pink_ghost.Tag == 0)
+                                    pink_ghost.Tag = 2;
+                                if ((int)orange_ghost.Tag == 0)
+                                    orange_ghost.Tag = 2;
                                 RemovePowerup();
                             }
                             break;
@@ -539,6 +544,18 @@ namespace Pac_Man
                         StartGame();
                     else if (this.gamestate == 2)
                         RestartGame();
+                    break;
+                case Keys.P:
+                    if (this.gamestate == 1 && this.paused)
+                    {
+                        MainGameTimer.Start();
+                        this.paused = false;
+                    }
+                    else if (this.gamestate == 1 && !this.paused)
+                    {
+                        MainGameTimer.Stop();
+                        this.paused = true;
+                    }
                     break;
             }
             player.speed = 4;
@@ -802,7 +819,7 @@ namespace Pac_Man
         {
             await Task.Delay(6000);
             int rnum = rand.Next(100);
-            if (rnum <= 2)
+            if (rnum <= 1)
             {
                 Fruit f = new Fruit(obj.Location);
                 BoardPanel.Controls.Add(f);

@@ -30,6 +30,7 @@ namespace Pac_Man
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Game));
             this.BoardPanel = new System.Windows.Forms.Panel();
             this.StartPanel = new System.Windows.Forms.Panel();
             this.TopPanel = new System.Windows.Forms.Panel();
@@ -189,6 +190,7 @@ namespace Pac_Man
             this.Controls.Add(this.BottomPanel);
             this.Controls.Add(this.TopPanel);
             this.Controls.Add(this.BoardPanel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Game";
             this.Text = "Pac-Man";
